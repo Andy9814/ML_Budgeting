@@ -44,7 +44,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class CameraXActivity extends AppCompatActivity {
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_camera_x);
 
         textureView = findViewById(R.id.view_Camera);
 
