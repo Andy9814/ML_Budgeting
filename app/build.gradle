@@ -37,4 +37,7 @@ dependencies {
     // Adding ML Kit to the project
     implementation 'com.google.firebase:firebase-ml-vision:23.0.0'
     implementation 'com.google.firebase:firebase-ml-vision-object-detection-model:19.0.1'
+
+    // OpenCSV
+    implementation 'com.opencsv:opencsv:4.6'
 }
