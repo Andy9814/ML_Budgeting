@@ -20,7 +20,6 @@
         <activity android:name=".BudgetLayout" />
         <activity android:name=".previewImage" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".CameraXActivity" />
         <activity android:name=".AlertDialogActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
