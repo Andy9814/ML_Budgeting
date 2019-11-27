@@ -23,6 +23,27 @@ public class BudgetCalculator {
     String TAG ="LogCatDemo";
 
 
+    public ArrayList<BudgetEntry> parseData(InputStream ins) throws IOException, ParseException {
+        ArrayList<BudgetEntry> budgetEntries;
+        CSVReader reader = new CSVReader(new InputStreamReader(ins));
+        budgetEntries = new ArrayList<>();
+        String[] nextLine;
+        int i = 0;
+        while ((nextLine = reader.readNext()) != null) {
+            if (i > 0) {
+                if (new BigDecimal(nextLine[6]).doubleValue() > 0 && nextLine[0].equals("Chequing")){
+                    budgetEntries.add((new BudgetEntry(nextLine[0], new SimpleDateFormat("MM/dd/yyyy").parse(nextLine[2]), new BigDecimal(nextLine[6]))));
+                }
+                else if(new BigDecimal(nextLine[6]).doubleValue() < 0 && nextLine[0].equals("MasterCard")){
+                    budgetEntries.add((new BudgetEntry(nextLine[0], new SimpleDateFormat("MM/dd/yyyy").parse(nextLine[2]), new BigDecimal(nextLine[6]))));
+                }
+            }
+            i++;
+        }
+        return budgetEntries;
+    }
+
+
 
 
     public BigDecimal calcBudget(ArrayList<BudgetEntry> budgetEntries) {

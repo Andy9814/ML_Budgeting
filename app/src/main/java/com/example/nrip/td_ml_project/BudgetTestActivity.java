@@ -31,13 +31,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class BudgetTestActivity extends AppCompatActivity {
     final String TestUserName="Pedro Sanchez";
-    Date StartDate = new Date();
-    Calendar Calendario;
-
 
     String TAG ="LogCatDemo";
-
     ArrayList<BudgetEntry> budgetEntries;
+    BigDecimal weeklyBudget;
     BudgetCalculator bc;
 
 
@@ -50,26 +47,17 @@ public class BudgetTestActivity extends AppCompatActivity {
 
     public void onLoadData(View view) {
         try {
+            // read in the file
             InputStream ins = getResources().openRawResource(
                     getResources().getIdentifier("csv35639",
                             "raw", getPackageName()));
 
-            CSVReader reader = new CSVReader(new InputStreamReader(ins));
-            budgetEntries = new ArrayList<>();
-            String[] nextLine;
-            int i = 0;
-            while ((nextLine = reader.readNext()) != null) {
-                if (i > 0) {
-                    if (new BigDecimal(nextLine[6]).doubleValue() > 0 && nextLine[0].equals("Chequing")){
-                        budgetEntries.add((new BudgetEntry(nextLine[0], new SimpleDateFormat("MM/dd/yyyy").parse(nextLine[2]), new BigDecimal(nextLine[6]))));
-                    }
-                    else if(new BigDecimal(nextLine[6]).doubleValue() < 0 && nextLine[0].equals("MasterCard")){
-                        budgetEntries.add((new BudgetEntry(nextLine[0], new SimpleDateFormat("MM/dd/yyyy").parse(nextLine[2]), new BigDecimal(nextLine[6]))));
-                    }
-                }
-                i++;
-            }
-            bc.calcBudget(budgetEntries);
+            // parse the data from the file
+            budgetEntries = bc.parseData(ins);
+
+            // calculate budget
+            weeklyBudget = bc.calcBudget(budgetEntries);
+
         } catch (IOException e) {
             Log.d(TAG, e.toString());
         } catch (ParseException e) {
