@@ -17,16 +17,31 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.MediaController;
 
+import com.example.nrip.td_ml_project.models.BudgetCalculator;
+import com.example.nrip.td_ml_project.models.BudgetEntry;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.util.ArrayList;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageButton;
 import pl.droidsonroids.gif.GifImageView;
 
 public class BudgetLayout extends AppCompatActivity {
+
+
+
+    String TAG ="LogCatDemo";
+    ArrayList<BudgetEntry> budgetEntries;
+    BigDecimal weeklyBudget;
+    BudgetCalculator bc;
+
+
 
     Chip priceChip,taxChip;
     Animation animation;
@@ -51,6 +66,8 @@ public class BudgetLayout extends AppCompatActivity {
         validatePrice(extras.getString("costImage"));
         priceChip.setText("Price :"+ extras.getString("costImage"));
 
+        this.onLoadData();
+
 
 //        AnimationSet as = new AnimationSet(true);
 //        TranslateAnimation animation = new TranslateAnimation(
@@ -61,24 +78,24 @@ public class BudgetLayout extends AppCompatActivity {
 
 
 
-for(int i  = 0 ; i < 2 ; ++i){
-    if(i  == 0) {
-        Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
-        fadeIn.setDuration(6000);
-        animationSet = new AnimationSet(true); //change to false
-        animationSet.addAnimation(fadeIn);
-        priceChip.setAnimation(animationSet);
-    }
-    else{
-        Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
-        fadeIn.setDuration(10000);
-       animationSetT = new AnimationSet(true); //change to false
-        animationSetT.addAnimation(fadeIn);
-        taxChip.setAnimation(animationSetT);
-    }
-}
+        for(int i  = 0 ; i < 2 ; ++i){
+            if(i  == 0) {
+                Animation fadeIn = new AlphaAnimation(0, 1);
+                fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
+                fadeIn.setDuration(6000);
+                animationSet = new AnimationSet(true); //change to false
+                animationSet.addAnimation(fadeIn);
+                priceChip.setAnimation(animationSet);
+            }
+            else{
+                Animation fadeIn = new AlphaAnimation(0, 1);
+                fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
+                fadeIn.setDuration(10000);
+                animationSetT = new AnimationSet(true); //change to false
+                animationSetT.addAnimation(fadeIn);
+                taxChip.setAnimation(animationSetT);
+            }
+        }
         gifImageButton.setImageResource(R.drawable.tick);
         Drawable drawable = gifImageButton.getDrawable();
         if (drawable instanceof Animatable) {
@@ -102,22 +119,44 @@ for(int i  = 0 ; i < 2 ; ++i){
 
 //        priceChip.startAnimation(as);
 //        taxChip.startAnimation(as);
- }
+    }
 
 
- private void validatePrice(String x){
-     Log.d("String is  === =========   ",x);
+    private void validatePrice(String x){
+        Log.d("String is  === =========   ",x);
         boolean foundDollar = false;
-     for (int i = 0; i < x.length(); i++){
-         char c = x.charAt(i);
-       if(c =='$'){
-           foundDollar = true;
-       }
+        for (int i = 0; i < x.length(); i++){
+            char c = x.charAt(i);
+            if(c =='$'){
+                foundDollar = true;
+            }
 
-       if(foundDollar){
-           price = new BigDecimal(c);
-           Log.d("Price is  === =========   ",price.toString());
-       }
-     }
- }
+            if(foundDollar){
+                price = new BigDecimal(c);
+                Log.d("Price is  === =========   ",price.toString());
+            }
+        }
+    }
+
+    public void onLoadData() {
+        bc = new BudgetCalculator();
+        try {
+            // read in the file
+            InputStream ins = getResources().openRawResource(
+                    getResources().getIdentifier("csv35639",
+                            "raw", getPackageName()));
+
+            // parse the data from the file
+            budgetEntries = bc.parseData(ins);
+
+            // calculate budget
+            weeklyBudget = bc.calcBudget(budgetEntries);
+
+        } catch (IOException e) {
+            Log.d(TAG, e.toString());
+        } catch (ParseException e) {
+            Log.d(TAG, e.toString());
+            e.printStackTrace();
+        }
+    }
 }
