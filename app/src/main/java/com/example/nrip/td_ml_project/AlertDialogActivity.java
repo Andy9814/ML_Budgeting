@@ -11,6 +11,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -28,14 +29,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.document.FirebaseVisionDocumentText;
+import com.google.firebase.ml.vision.document.FirebaseVisionDocumentTextRecognizer;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
+import com.google.firebase.ml.vision.text.RecognizedLanguage;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import static androidx.core.app.ActivityCompat.startActivityForResult;
 
@@ -60,8 +65,13 @@ public class AlertDialogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert_dialog);
-        intentBudget = new Intent(AlertDialogActivity.this, BudgetLayout.class);
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        boolean firstStart = prefs.getBoolean("firstStart", true);
 
+        if (firstStart) {
+            showStartDialog();
+        }else{
+        intentBudget = new Intent(AlertDialogActivity.this, BudgetLayout.class);
 //        new MaterialAlertDialogBuilder(AlertDialogActivity.this)
 //                .setTitle("Title")
 //                .setMessage("Your message goes here. Keep it short but clear.")
@@ -98,8 +108,29 @@ public class AlertDialogActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+        }
 
     }
+
+
+    private void showStartDialog() {
+        new MaterialAlertDialogBuilder(AlertDialogActivity.this)
+                .setTitle("One Time Dialog")
+                .setMessage("This should only be shown once")
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create().show();
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("firstStart", false);
+        editor.apply();
+    }
+
     public void startCamera(){
         // Check for the permissonis
         if (checkPermissionsGranted()) {
@@ -172,9 +203,10 @@ public class AlertDialogActivity extends AppCompatActivity {
 
         }
     }
+
     public void   recognizeText(FirebaseVisionImage image) {
         FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance()
-                .getOnDeviceTextRecognizer();
+                .getCloudTextRecognizer(); // Use Cloud Api
         Task<FirebaseVisionText> result =
                 detector.processImage(image)
                         .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>()

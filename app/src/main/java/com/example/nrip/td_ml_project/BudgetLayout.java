@@ -60,7 +60,7 @@ public class BudgetLayout extends AppCompatActivity {
     Animation animation;
     AnimationSet animationSet,animationSetT,animationSetcd ;
     GifImageView gifImageButton;
-    private BigDecimal price = BigDecimal.ZERO;
+    BigDecimal price;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -138,25 +138,27 @@ public class BudgetLayout extends AppCompatActivity {
 
     private void validatePrice(String x){
         Log.d("String is  === =========   ",x);
+        String tvPrice  = "";
         boolean foundDollar = false;
         for (int i = 0; i < x.length(); i++){
             char c = x.charAt(i);
-            if(c =='$'){
-                foundDollar = true;
-            }
             if(foundDollar){
-                price = new BigDecimal(c);
-                Log.d("Price is  === =========   ",price.toString());
+                tvPrice +=  c ;
+            }
+            else if(c =='$'){
+                foundDollar = true;
             }else{
                 Log.d("","No dollar found");
             }
         }
-        comparePrices();
+        price = new BigDecimal( tvPrice);
+        if(foundDollar) {
+            comparePrices();
+        }
     }
 
     public void comparePrices(){
-
-        if(price.compareTo(weeklyBudget) < 1)
+        if(price.doubleValue() <= weeklyBudget.doubleValue())
         {
             gifImageButton.setImageResource(R.drawable.checkmarksingleplay);
             Drawable drawable = gifImageButton.getDrawable();
@@ -165,6 +167,16 @@ public class BudgetLayout extends AppCompatActivity {
                 ((Animatable) drawable).start();
             }
         }
+        else{
+            gifImageButton.setImageResource(R.drawable.xmarksingleplay);
+            Drawable drawable = gifImageButton.getDrawable();
+            if (drawable instanceof Animatable)
+            {
+                ((Animatable) drawable).start();
+            }
+        }
+        // disable the continue button
+        contBtn.setEnabled(false);
     }
     public void onLoadData() {
         bc = new BudgetCalculator();
