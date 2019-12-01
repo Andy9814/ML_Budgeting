@@ -15,8 +15,12 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.example.nrip.td_ml_project.animation.ProgressBarAnimation;
 import com.example.nrip.td_ml_project.models.BudgetCalculator;
 import com.example.nrip.td_ml_project.models.BudgetEntry;
 import com.google.android.material.chip.Chip;
@@ -25,6 +29,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -40,7 +45,15 @@ public class BudgetLayout extends AppCompatActivity {
     ArrayList<BudgetEntry> budgetEntries;
     BigDecimal weeklyBudget;
     BudgetCalculator bc;
+    Button contBtn;
 
+    BigDecimal budgTotalWeekly;
+    BigDecimal budgAlreadySpent;
+    BigDecimal budgToBeSpent;
+
+    ProgressBar firstBar = null;
+    TextView tvBudgetToBeSpent = null;
+    TextView tvCurrentBudget = null;
 
 
     Chip priceChip,taxChip;
@@ -51,30 +64,23 @@ public class BudgetLayout extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setTheme(R.style.AppTheme);
+      //  setTheme(R.style.AppTheme);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budget_layout);
+        contBtn = findViewById(R.id.contBtn);
         priceChip= findViewById(R.id.priceChip);
         taxChip= findViewById(R.id.TaxChip);
         gifImageButton = findViewById(R.id.gifImageView);
-
+        this.onLoadData();
         Intent intt = getIntent();
         Bundle extras = intt.getExtras();
 
 
-        validatePrice(extras.getString("costImage"));
-        priceChip.setText("Price :"+ extras.getString("costImage"));
+       validatePrice(extras.getString("costImage"));
+       priceChip.setText("Price :"+ extras.getString("costImage"));
+       // priceChip.setText("Price : 300.65");
 
-        this.onLoadData();
-
-
-//        AnimationSet as = new AnimationSet(true);
-//        TranslateAnimation animation = new TranslateAnimation(
-//                Animation.ABSOLUTE, 0.0f, Animation.ABSOLUTE, 0.0f,
-//                Animation.ABSOLUTE, 0.0f, Animation.ABSOLUTE, -150.0f);
-//        animation.setDuration(500);
-//        as.addAnimation(animation);
 
 
 
@@ -96,29 +102,37 @@ public class BudgetLayout extends AppCompatActivity {
                 taxChip.setAnimation(animationSetT);
             }
         }
-        gifImageButton.setImageResource(R.drawable.tick);
-        Drawable drawable = gifImageButton.getDrawable();
-        if (drawable instanceof Animatable) {
-            ((Animatable) drawable).start();
-        }
-//        final MediaController mc = new MediaController(this);
-//        mc.setMediaPlayer((GifDrawable) gifImageButton.getDrawable());
-//        mc.setAnchorView(gifImageButton);
-//        gifImageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mc.show();
-//            }
-//        });
-//        TranslateAnimation animation1 = new TranslateAnimation(
-//                Animation.ABSOLUTE, 0.0f, Animation.ABSOLUTE, 0.0f,
-//                Animation.ABSOLUTE, 150.0f, Animation.ABSOLUTE, 0.0f);
-//        animation1.setDuration(200);
-//        animation1.setStartOffset(200);
-//        as.addAnimation(animation1);
 
-//        priceChip.startAnimation(as);
-//        taxChip.startAnimation(as);
+        budgTotalWeekly = weeklyBudget;
+        budgAlreadySpent = new BigDecimal(350);
+        budgToBeSpent = new BigDecimal(100);
+
+        tvBudgetToBeSpent = (TextView) findViewById(R.id.tvBudgetToBeSpent);
+        tvCurrentBudget = (TextView) findViewById(R.id.tvCurrentBudget);
+
+        tvCurrentBudget.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(budgTotalWeekly)));
+
+        firstBar = (ProgressBar)findViewById(R.id.firstBar);
+        firstBar.setMax(budgTotalWeekly.add(new BigDecimal(0.99)).intValue());
+        firstBar.setProgress(budgAlreadySpent.intValue());
+
+
+
+        ProgressBarAnimation anim1 = new ProgressBarAnimation(firstBar, false, 0, budgAlreadySpent.intValue(),tvBudgetToBeSpent);
+        anim1.setDuration(400);
+        firstBar.startAnimation(anim1);
+
+        firstBar.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //tv.setX((int)(firstBar.getProgress()/firstBar.getWidth()));
+                //tv.setX(40);
+                ProgressBarAnimation anim2 = new ProgressBarAnimation(firstBar, true, budgAlreadySpent.intValue(), budgAlreadySpent.add(budgToBeSpent).intValue(),tvBudgetToBeSpent);
+                anim2.setDuration(4000);
+                firstBar.startAnimation(anim2);
+            }
+        }, 400);
+
     }
 
 
@@ -130,14 +144,28 @@ public class BudgetLayout extends AppCompatActivity {
             if(c =='$'){
                 foundDollar = true;
             }
-
             if(foundDollar){
                 price = new BigDecimal(c);
                 Log.d("Price is  === =========   ",price.toString());
+            }else{
+                Log.d("","No dollar found");
+            }
+        }
+        comparePrices();
+    }
+
+    public void comparePrices(){
+
+        if(price.compareTo(weeklyBudget) < 1)
+        {
+            gifImageButton.setImageResource(R.drawable.checkmarksingleplay);
+            Drawable drawable = gifImageButton.getDrawable();
+            if (drawable instanceof Animatable)
+            {
+                ((Animatable) drawable).start();
             }
         }
     }
-
     public void onLoadData() {
         bc = new BudgetCalculator();
         try {
@@ -158,5 +186,10 @@ public class BudgetLayout extends AppCompatActivity {
             Log.d(TAG, e.toString());
             e.printStackTrace();
         }
+    }
+
+    public void onClickContinueBtn(View view) {
+        Intent intent = new Intent(BudgetLayout.this, InvestmentLayout.class);
+        startActivity( intent );
     }
 }

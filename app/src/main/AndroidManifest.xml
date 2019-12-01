@@ -17,8 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Launcher">
+        <!--        <activity android:name=".previewImage" />-->
+        <activity android:name=".InvestmentLayout"></activity>
         <activity android:name=".BudgetLayout" />
-        <activity android:name=".previewImage" />
         <activity android:name=".MainActivity" />
         <activity android:name=".AlertDialogActivity">
             <intent-filter>
