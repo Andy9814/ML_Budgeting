@@ -165,11 +165,12 @@
 
                     <TextView
                         android:id="@+id/spentTv"
-                        android:layout_width="185dp"
-                        android:layout_height="62dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="Spent"
                         android:textAlignment="viewStart"
                         android:textSize="30sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/spentEt"
                         app:layout_constraintStart_toStartOf="parent"
@@ -178,10 +179,11 @@
                     <TextView
                         android:id="@+id/spentEt"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="96dp"
                         android:textAlignment="center"
                         android:textSize="30sp"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/spentTv"
