@@ -3,9 +3,11 @@
 <!-- Base application theme. -->
 <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
     <!-- Customize your theme here. -->
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorPrimary">#008a00</item>
+    <item name="colorPrimaryDark">#1a5336</item>
+    <item name="colorAccent">#f9fcf4</item>
+    <item name="colorSecondary">#f9fcf4</item>
+    <item name="colorBackgroundFloating">#f9fcf4</item>
     <item name="android:windowActionBar">false</item>
     <item name="android:windowNoTitle">true</item>
 </style>
@@ -23,7 +25,7 @@
     </style>
 
     <style name="Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="backgroundTint">@color/colorPrimaryDark</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
         <item name="rippleColor">@color/colorAccent</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">14sp</item>
@@ -36,6 +38,5 @@
         <item name="android:textColor">@android:color/darker_gray</item>
         <item name="android:textSize">14sp</item>
     </style>
-
 
 </resources>
