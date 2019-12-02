@@ -3,7 +3,7 @@
 
 
 <!-- Base application theme. -->
-<style name="AppTheme" parent="Theme.MaterialComponents.Light">
+<style name="AppTheme" parent="Base.V14.Theme.MaterialComponents.Bridge">
     <!-- Customize your theme here. -->
     <item name="android:windowActionBar">false</item>
     <item name="android:windowNoTitle">true</item>
