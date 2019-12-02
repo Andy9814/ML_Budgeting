@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -55,11 +56,13 @@ public class AlertDialogActivity extends AppCompatActivity {
     Uri picUri;
     String mCurrentPhotoPath = "";
     String costImage = "";
+    String autoInvest = "";
 
     private int REQUEST_CODE_PERMISSIONS = 200;
     static final int IMAGE_FROM_CAMERA = 1;
     private static final int CROP_FROM_CAMERA = 2;
     Intent intentBudget ;
+    EditText startupAutoInvestEt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,29 +70,43 @@ public class AlertDialogActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alert_dialog);
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", true);
-
-        if (firstStart) {
-            showStartDialog();
-        }else{
+        autoInvest = prefs.getString("sharedPrefAutoInvest", "this");
         intentBudget = new Intent(AlertDialogActivity.this, BudgetLayout.class);
-//        new MaterialAlertDialogBuilder(AlertDialogActivity.this)
-//                .setTitle("Title")
-//                .setMessage("Your message goes here. Keep it short but clear.")
-//                .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                    }
-//                })
-//                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                    }
-//                })
-//                .show();
+        if (firstStart) {
+             showStartDialog();
+        }else{
+             startCameraDialog();
+        }
+    }
 
 
+    private void showStartDialog() {
+        // also you can put the custom xml instead of using EditText.
+        MaterialAlertDialogBuilder ad =      new MaterialAlertDialogBuilder(AlertDialogActivity.this)
+                //.setTitle("AutoInvestment")
+                .setMessage("Please Provide the AutoInvestment : ");
+                startupAutoInvestEt = new EditText(this);
+                ad.setView(startupAutoInvestEt);
+                ad.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        autoInvest = startupAutoInvestEt.getText().toString();
+                        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putBoolean("firstStart", false);
+                        editor.putString("sharedPrefAutoInvest", autoInvest);
+                        editor.apply();
+                        startCameraDialog();
+
+                    }
+                })
+                .create().show();
+
+
+    }
+
+    public void startCameraDialog(){
         new MaterialAlertDialogBuilder(AlertDialogActivity.this, R.style.AlertDialogTheme)
                 //.setTitle("Title")
                 .setMessage("Go to the Camera to scan the price")
@@ -100,35 +117,13 @@ public class AlertDialogActivity extends AppCompatActivity {
                         startCamera();
                     }
                 })
-                .setNeutralButton("LATER", new DialogInterface.OnClickListener() {
+                .setNeutralButton("History", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(AlertDialogActivity.this, BudgetLayout.class);
-                        startActivity( intent );
+
                     }
                 })
                 .show();
-        }
-
-    }
-
-
-    private void showStartDialog() {
-        new MaterialAlertDialogBuilder(AlertDialogActivity.this)
-                .setTitle("One Time Dialog")
-                .setMessage("This should only be shown once")
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create().show();
-
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("firstStart", false);
-        editor.apply();
     }
 
     public void startCamera(){
@@ -218,13 +213,13 @@ public class AlertDialogActivity extends AppCompatActivity {
                                     Point[] cornerPoints = block.getCornerPoints();
                                     String text = block.getText();
                                     for (FirebaseVisionText.Line line: block.getLines()) {
-                                        Log.d("----------------------------------------------------",line.getText());
                                         costImage += line.getText();
                                         for (FirebaseVisionText.Element element: line.getElements()) {
                                         }
                                     }
                                 }
                                 intentBudget.putExtra("costImage",costImage);
+                                intentBudget.putExtra("autoInvestAmt", autoInvest);
                                 startActivity( intentBudget);
                             }
 
@@ -274,6 +269,20 @@ public class AlertDialogActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    //while Requesting Permission, take us back to camera again.
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            if (checkPermissionsGranted()) {
+                dispatchTakePictureIntent();
+            } else {
+                Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
     }
 
 }
