@@ -95,7 +95,7 @@ public class BudgetLayout extends AppCompatActivity {
         userProfile = new UserAcount(this.imagePrice, this.autoInvestAmt);
         userProfile.setUserTotalAmount(totalAmount);
 
-        if(userProfile.isUserWantToBuyCheck())
+        //if(userProfile.isUserWantToBuyCheck())
             userProfile.setUserBudget(weeklyBudget.subtract(totalAmount));
 
         // FOR TEST PURPOSES ----------------- -------------------------------------- DELETE AFTER
@@ -195,7 +195,7 @@ public class BudgetLayout extends AppCompatActivity {
             if (drawable instanceof Animatable) {
                 ((Animatable) drawable).start();
             }
-            userProfile.setUserWantToBuyCheck(true);
+            //userProfile.setUserWantToBuyCheck(true);
         } else {
             gifImageButton.setImageResource(R.drawable.xmarksingleplay);
             Drawable drawable = gifImageButton.getDrawable();
@@ -204,7 +204,7 @@ public class BudgetLayout extends AppCompatActivity {
             }
             // disable the continue button
             contBtn.setEnabled(false);
-            userProfile.setUserWantToBuyCheck(false);
+            //userProfile.setUserWantToBuyCheck(false);
         }
 
     }
