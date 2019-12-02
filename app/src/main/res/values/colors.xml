@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#008A00</color>
+    <color name="colorPrimaryDark">#1A5336</color>
+    <color name="colorBackground">#FFF</color>
+    <color name="colorBackgroundDark">#F9FCF4</color>
+
+    <color name="progressDone">#F00</color>
+    <color name="progressPotential">#FFA500 </color>
+    <color name="progressRemaining">#00FF66</color>
 </resources>
+
+
+    <!--    <item name="colorPrimary">#008a00</item>-->
+    <!--    <item name="colorPrimaryDark">#1a5336</item>-->
+    <!--    <item name="colorAccent">#f9fcf4</item>-->
+    <!--    <item name="colorSecondary">#f9fcf4</item>-->
+
+
+<!--    &lt;!&ndash;Color&ndash;&gt;-->
+
+<!--    &lt;!&ndash;Material uses an organized approach to applying color by providing a set of attributes &ndash;&gt;-->
+<!--    &lt;!&ndash;which define the color of generalized UI elements such as backgrounds, surfaces, type &ndash;&gt;-->
+<!--    &lt;!&ndash;and icons. Using these attributes throughout your app makes it easy to change a single &ndash;&gt;-->
+<!--    &lt;!&ndash;color, or the entire theme, and have those changes cascade through the interface.&ndash;&gt;-->
+
+<!--    &lt;!&ndash;Color is customized by overriding Material Components color attributes with custom &ndash;&gt;-->
+<!--    &lt;!&ndash;color values. In this project, your theme’s color attributes are already overridden &ndash;&gt;-->
+<!--    &lt;!&ndash;with default values defined in this file, color.xml.  Change any of the values in &ndash;&gt;-->
+<!--    &lt;!&ndash;this file to see changes applied across all elements of your app.&ndash;&gt;-->
+
+<!--    &lt;!&ndash;LIGHT COLOR THEME&ndash;&gt;-->
+
+<!--    &lt;!&ndash;colorPrimary colors map to components and elements, such as app bars and buttons. &ndash;&gt;-->
+<!--    &lt;!&ndash;colorSecondary colors are most often used as accents on components, such as FABs and &ndash;&gt;-->
+<!--    &lt;!&ndash;selection controls.&ndash;&gt;-->
+<!--<color name="color_primary">#008a00</color>-->
+<!--<color name="color_primary_variant">#1a5336</color>-->
+<!--<color name="color_secondary">#03dac6</color>-->
+<!--<color name="color_secondary_variant">#018786</color>-->
+
+<!--    &lt;!&ndash;colorBackground appears behind scrollable content and is used for the default window&ndash;&gt;-->
+<!--    &lt;!&ndash;background. colorSurface is mapped to the surface of components such as cards, sheets&ndash;&gt;-->
+<!--    &lt;!&ndash;and menus. colorError is used to indicate an error state for components such as&ndash;&gt;-->
+<!--    &lt;!&ndash;text fields.&ndash;&gt;-->
+<!--<color name="color_background">#ffffff</color>-->
+<!--<color name="color_surface">#f9fcf4</color>-->
+<!--<color name="color_error">#b00020</color>-->
+
+<!--    &lt;!&ndash;"On" colors define how text, icons and strokes are colored in relation to the surface&ndash;&gt;-->
+<!--    &lt;!&ndash;on which they appear.&ndash;&gt;-->
+<!--<color name="color_on_primary">#ffffff</color>-->
+<!--<color name="color_on_secondary">#000000</color>-->
+<!--<color name="color_on_background">#000000</color>-->
+<!--<color name="color_on_surface">#000000</color>-->
+<!--<color name="color_on_error">#ffffff</color>-->
