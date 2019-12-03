@@ -55,8 +55,9 @@ public class AlertDialogActivity extends AppCompatActivity {
     Bitmap bitmapImg;
     Uri picUri;
     String mCurrentPhotoPath = "";
-    String costImage = "";
-    String autoInvest = "";
+    String costImage   = "";
+    String autoInvest  = "";
+    String manualPrice = "";
 
     private int REQUEST_CODE_PERMISSIONS = 200;
     static final int IMAGE_FROM_CAMERA = 1;
@@ -68,63 +69,62 @@ public class AlertDialogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert_dialog);
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        boolean firstStart = prefs.getBoolean("firstStart", true);
-        autoInvest = prefs.getString("sharedPrefAutoInvest", "this");
         intentBudget = new Intent(AlertDialogActivity.this, BudgetLayout.class);
-        if (firstStart) {
-             showStartDialog();
-        }else{
-             startCameraDialog();
-        }
+        Intent intt = getIntent();
+        Bundle extras = intt.getExtras();
+        autoInvest = extras.getString("AutoInvest");
+        startCamera();
     }
 
 
-    private void showStartDialog() {
-        // also you can put the custom xml instead of using EditText.
-        MaterialAlertDialogBuilder ad =      new MaterialAlertDialogBuilder(AlertDialogActivity.this)
-                //.setTitle("AutoInvestment")
-                .setMessage("Please Provide the AutoInvestment : ");
-                startupAutoInvestEt = new EditText(this);
-                ad.setView(startupAutoInvestEt);
-                ad.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        autoInvest = startupAutoInvestEt.getText().toString();
-                        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putBoolean("firstStart", false);
-                        editor.putString("sharedPrefAutoInvest", autoInvest);
-                        editor.apply();
-                        startCameraDialog();
-
-                    }
-                })
-                .create().show();
-
-
-    }
-
-    public void startCameraDialog(){
-        new MaterialAlertDialogBuilder(AlertDialogActivity.this, R.style.AlertDialogTheme)
-                //.setTitle("Title")
-                .setMessage("Go to the Camera to scan the price")
-                .setCancelable(false)
-                .setPositiveButton("Go To Camera", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        startCamera();
-                    }
-                })
-                .setNeutralButton("History", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
-                .show();
-    }
+//    private void showStartDialog() {
+//        // also you can put the custom xml instead of using EditText.
+//        MaterialAlertDialogBuilder ad =      new MaterialAlertDialogBuilder(AlertDialogActivity.this)
+//                //.setTitle("AutoInvestment")
+//                .setMessage("Please Provide the AutoInvestment : ");
+//                startupAutoInvestEt = new EditText(this);
+//                ad.setView(startupAutoInvestEt);
+//                ad.setCancelable(false);
+//                ad.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                        autoInvest = startupAutoInvestEt.getText().toString();
+//                        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = prefs.edit();
+//                        editor.putBoolean("firstStart", false);
+//                        editor.putString("sharedPrefAutoInvest", autoInvest);
+//                        editor.apply();
+//                       // startCameraDialog();
+//                        startCamera();
+//                    }
+//                })
+//                .create().show();
+//
+//
+//    }
+//
+//    // we not gonna use it
+//    public void startCameraDialog(){
+//        new MaterialAlertDialogBuilder(AlertDialogActivity.this)
+//        //new MaterialAlertDialogBuilder(AlertDialogActivity.this, R.style.AlertDialogTheme)
+//                //.setTitle("Title")
+//                .setMessage("Go to the Camera to scan the price")
+//                .setCancelable(false)
+//                .setPositiveButton("Go To Camera", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        startCamera();
+//                    }
+//                })
+//                .setNeutralButton("History", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                    }
+//                })
+//                .show();
+//    }
 
     public void startCamera(){
         // Check for the permissonis

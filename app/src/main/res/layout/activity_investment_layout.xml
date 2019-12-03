@@ -1,316 +1,330 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".InvestmentLayout"
     >
-
-
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardInvestment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="10dp"
-
-        android:backgroundTint="@color/colorBackgroundDark"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        style="@style/CardView.Base"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         >
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp">
+            android:layout_height="match_parent"
+            >
 
+<!--            Additional Investment Prompt-->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CardView.Light"
 
-            <TextView
-                android:textColor="@color/colorPrimaryDark"
-                android:id="@+id/InvestmentTextView"
+                android:id="@+id/cardInvestment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Make an Additional Investment Today?"
-                android:textAlignment="center"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+
                 app:layout_constraintTop_toTopOf="parent"
-                android:textSize="30sp">
-
-            </TextView>
-
-            <LinearLayout
-                android:id="@+id/linearLayoutLeft"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:maxWidth="200dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/InvestmentTextView"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:padding="10dp"
                 >
 
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Alert.Button.Positive"
-                    android:id="@+id/btnDoubleInvst"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:textSize="20dp"
-                    android:onClick="onClickInvstBtn"
-                    android:text="YES! - Double My Auto!"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="10dp"
-                    android:textAlignment="textStart"
-                    />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnMatch"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:textSize="20dp"
-                    android:onClick="onClickInvstBtn"
-                    android:text="YES! - Match My Purchase!"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="10dp"
-                    android:textAlignment="textStart"
-                    style="@style/Alert.Button.Positive"
-                    />
-
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Alert.Button.Positive"
-                    android:id="@+id/btnOther"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:textSize="20dp"
-                    android:onClick="onClickInvstBtn"
-                    android:text="YES! - Custom Amount"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="10dp"
-                    android:textAlignment="textStart"
-                    />
-
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Alert.Button.Neutral"
-                    android:id="@+id/btnNotToday"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:onClick="onClickInvstBtn"
-                    android:text="Maybe Another Time"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="10dp"
-                    android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="10dp"
-                    />
-
-
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardAgree"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="10dp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-      >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
-
-            <TextView
-                android:id="@+id/tvSummary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Summary"
-                android:textAlignment="center"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textSize="30sp">
-
-            </TextView>
-
-
-
-<!--            SPENT-->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/spent"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_margin="6dp"
-                >
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp">
 
-                    <TextView
-                        android:id="@+id/spentTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Spent"
-                        android:textAlignment="viewStart"
-                        android:textSize="20sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/spentEt"
-                        android:layout_width="wrap_content"
+                        style="@style/Base.Widget.AppCompat.TextView.Light"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:id="@+id/InvestmentTextView"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:text="Make an Additional Investment Today?"
                         android:textAlignment="center"
-                        android:textSize="20sp"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-<!--            INVESTED %-->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/invested"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_margin="6dp"
-                >
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="10dp">
-
-                    <TextView
-                        android:id="@+id/investedTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Invested"
-                        android:textAlignment="textStart"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        />
-
-                    <TextView
-                        android:id="@+id/investedEt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="textEnd"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!--            TOTAL %-->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/total"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_margin="6dp"
-                >
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="10dp">
-
-                    <TextView
-                        android:id="@+id/tvTotalHeader"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total"
-                        android:textAlignment="textStart"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        />
+                        android:textSize="30sp">
 
-                    <TextView
-                        android:id="@+id/tvTotalValue"
+                    </TextView>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutLeft"
+                        android:orientation="vertical"
                         android:layout_width="wrap_content"
+                        android:maxWidth="200dp"
                         android:layout_height="wrap_content"
-                        android:textAlignment="textEnd"
-                        android:textSize="20sp"
+                        app:layout_constraintTop_toBottomOf="@+id/InvestmentTextView"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:padding="10dp"
+                        >
+
+                        <com.google.android.material.button.MaterialButton
+                            style="@style/Button.Positive"
+                            android:id="@+id/btnDoubleInvst"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:textSize="20dp"
+                            android:onClick="onClickInvstBtn"
+                            android:text="YES! - Double My Auto!"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="10dp"
+                            android:textAlignment="textStart"
+                            />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnMatch"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:textSize="20dp"
+                            android:onClick="onClickInvstBtn"
+                            android:text="YES! - Match My Purchase!"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="10dp"
+                            android:textAlignment="textStart"
+                            style="@style/Button.Positive"
+                            />
+
+                        <com.google.android.material.button.MaterialButton
+                            style="@style/Button.Positive"
+                            android:id="@+id/btnOther"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:textSize="20dp"
+                            android:onClick="onClickInvstBtn"
+                            android:text="YES! - Custom Amount"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="10dp"
+                            android:textAlignment="textStart"
+                            />
+
+                        <com.google.android.material.button.MaterialButton
+                            style="@style/Alert.Button.Neutral"
+                            android:id="@+id/btnNotToday"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:onClick="onClickInvstBtn"
+                            android:text="Maybe Another Time"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="10dp"
+                            android:layout_marginHorizontal="30dp"
+                            android:layout_marginTop="10dp"
+                            />
+
+
+                    </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
-<!--            BUDGET REMAINING-->
+<!--            Investment Summary-->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/remainingBudget"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_margin="6dp"
+                style="@style/CardView.Light"
+                android:id="@+id/cardAgree"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 >
-                <androidx.constraintlayout.widget.ConstraintLayout
+
+                <LinearLayout
+                    android:backgroundTint="@android:color/transparent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="10dp"
+                    android:orientation="vertical"
                     >
 
                     <TextView
-                        android:id="@+id/remainingBudgetTv"
+                        style="@style/Base.Widget.AppCompat.TextView.Light"
+                        android:id="@+id/tvSummary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAlignment="viewStart"
-                        android:textSize="20sp"
-                        android:text="Budget Left"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"/>
-
-                    <TextView
-                        android:id="@+id/remainingBudgetEt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="textEnd"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        />
+                        android:text="Summary"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:textSize="30sp">
+                    </TextView>
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--            SPENT-->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/CardView.Light.Content"
+                        android:id="@+id/spent"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        >
+<!--                        android:layout_margin="6dp"-->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="10dp">
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/spentTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Spent"
+                                android:textAlignment="viewStart"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/spentEt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!--            INVESTED %-->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/CardView.Light.Content"
+                        android:id="@+id/invested"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        >
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="10dp">
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/investedTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Invested"
+                                android:textAlignment="textStart"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                />
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/investedEt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="textEnd"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!--            TOTAL %-->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/CardView.Light.Content"
+                        android:id="@+id/total"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        >
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="10dp">
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvTotalHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total"
+                                android:textAlignment="textStart"
+                                android:textSize="20sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                />
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvTotalValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="textEnd"
+                                android:textSize="20sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!--            BUDGET REMAINING-->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/CardView.Light.Content"
+                        android:id="@+id/remainingBudget"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        >
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="10dp"
+                            >
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/remainingBudgetTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="viewStart"
+                                android:textSize="20sp"
+                                android:text="Budget Left"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"/>
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/remainingBudgetEt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="textEnd"
+                                android:textSize="20sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnInvestMentOkay"
+                        android:layout_width="203dp"
+                        android:layout_height="60dp"
+                        android:onClick="onClickOkay"
+                        android:text="Okay"
+                        style="@style/Button.Positive"
+                        android:layout_gravity="center"
+                        >
+
+                    </com.google.android.material.button.MaterialButton>
+                </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnInvestMentOkay"
-                android:layout_width="203dp"
-                android:layout_height="60dp"
-                android:onClick="onClickOkay"
-                android:text="okay"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="10dp">
 
-            </com.google.android.material.button.MaterialButton>
-        </LinearLayout>
 
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
