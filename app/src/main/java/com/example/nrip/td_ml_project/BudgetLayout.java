@@ -21,6 +21,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Pair;
 
 import com.example.nrip.td_ml_project.animation.Animator;
+import com.example.nrip.td_ml_project.animation.AnimatorListener;
 import com.example.nrip.td_ml_project.animation.FadeInAnimation;
 import com.example.nrip.td_ml_project.animation.ProgressBarAnimation;
 import com.example.nrip.td_ml_project.models.BudgetCalculator;
@@ -53,8 +54,10 @@ public class BudgetLayout extends AppCompatActivity {
     BigDecimal budgAlreadySpent;
     BigDecimal budgToBeSpent;
     BigDecimal imagePrice;
-    BigDecimal autoInvestAmt;
-    BigDecimal tax = new BigDecimal(0.13);
+    BigDecimal autoInvestRate;
+    BigDecimal investAmt;
+    BigDecimal taxRate = new BigDecimal(0.13);
+    BigDecimal taxAmt;
     BigDecimal totalAmount;
 
     ProgressBar firstBar = null;
@@ -70,14 +73,21 @@ public class BudgetLayout extends AppCompatActivity {
     UserAcount userProfile = null;
 
     TextView tvPriceValue = null;
+    TextView tvTaxHeader = null;
     TextView tvTaxValue = null;
+    TextView tvInvestHeader = null;
     TextView tvInvestValue = null;
     TextView tvTotalValue = null;
+    TextView tvTotalBudgetValue = null;
+    TextView tvSpentBudgetValue = null;
 
     MaterialCardView mcvPrice;
     MaterialCardView mcvTax;
     MaterialCardView mcvAutoInvest;
     MaterialCardView mcvTotal;
+    MaterialCardView mcvTotalBudget;
+    MaterialCardView mcvSpentBudget;
+    MaterialCardView mcvProgressBar;
 
     ConstraintLayout progressContainer;
 
@@ -111,21 +121,28 @@ public class BudgetLayout extends AppCompatActivity {
 
 
 
-        budgTotalWeekly = weeklyBudget;
-        budgAlreadySpent = new BigDecimal(350);
-        budgToBeSpent = new BigDecimal(100);
+
 
 
 
         imagePrice = validatePrice(extras.getString("costImage"));
-        autoInvestAmt = new BigDecimal(extras.getString("autoInvestAmt"));
+        autoInvestRate = new BigDecimal(extras.getString("autoInvestAmt"));
         totalAmount = calculateTotal();
 
         tvPriceValue.setText(extras.getString("costImage"));
-        tvTaxValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(tax)));
-        tvInvestValue.setText(extras.getString("autoInvestAmt") + "%");
+        tvTaxHeader.setText(getText(R.string.txtTax) + " @" + String.valueOf(taxRate.setScale(2, BigDecimal.ROUND_HALF_UP)) + "%:");
+        tvTaxValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(taxAmt)));
+        tvInvestHeader.setText(getText(R.string.txtAutoInvestment) + " @" + String.valueOf(autoInvestRate.setScale(2, BigDecimal.ROUND_HALF_UP)) + "%:");
+        tvInvestValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(investAmt)));
         tvTotalValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(totalAmount)));
 
+
+        budgTotalWeekly = weeklyBudget;
+        budgAlreadySpent = new BigDecimal(350); // TODO NEEDS TO BE PULLED FROM JSON OR WHEREVER
+        budgToBeSpent = totalAmount;
+
+        tvTotalBudgetValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(weeklyBudget)));
+        tvSpentBudgetValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(budgAlreadySpent)));
 
         //tvPriceChip.setText("Price :" + extras.getString("costImage"));
         //tvAutoInvestChip.setText("Auto Invest:" + extras.getString("autoInvestAmt") + "%");
@@ -139,7 +156,7 @@ public class BudgetLayout extends AppCompatActivity {
         }
 
         // Create UserProfile for this Trasaction
-        userProfile = new UserAcount(this.imagePrice, this.autoInvestAmt);
+        userProfile = new UserAcount(this.imagePrice, this.autoInvestRate);
         userProfile.setUserTotalAmount(totalAmount);
 
         //if(userProfile.isUserWantToBuyCheck())
@@ -186,7 +203,7 @@ public class BudgetLayout extends AppCompatActivity {
 
 
 
-        Animation fadeIn1 = new FadeInAnimation(0, 1, 900);
+        Animation fadeIn1 = new FadeInAnimation(0, 1, 700);
         fadeIn1.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -200,7 +217,7 @@ public class BudgetLayout extends AppCompatActivity {
             }
         });
 
-        Animation fadeIn2 = new FadeInAnimation(0, 1, 900);
+        Animation fadeIn2 = new FadeInAnimation(0, 1, 700);
         fadeIn2.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -214,7 +231,7 @@ public class BudgetLayout extends AppCompatActivity {
             }
         });
 
-        Animation fadeIn3 = new FadeInAnimation(0, 1, 900);
+        Animation fadeIn3 = new FadeInAnimation(0, 1, 700);
         fadeIn3.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -228,7 +245,7 @@ public class BudgetLayout extends AppCompatActivity {
             }
         });
 
-        Animation fadeIn4 = new FadeInAnimation(0, 1, 900);
+        Animation fadeIn4 = new FadeInAnimation(0, 1, 700);
         fadeIn4.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -242,12 +259,56 @@ public class BudgetLayout extends AppCompatActivity {
             }
         });
 
+        Animation fadeIn5 = new FadeInAnimation(0, 1, 700);
+        fadeIn5.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mcvTotalBudget.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        Animation fadeIn6 = new FadeInAnimation(0, 1, 700);
+        fadeIn6.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mcvSpentBudget.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        Animation fadeIn7 = new FadeInAnimation(0, 1, 700);
+        fadeIn7.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mcvProgressBar.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
 
         Queue<Pair<View,Animation>> animationQueue = new LinkedList<>();
         animationQueue.add(new Pair<View, Animation>(mcvPrice,fadeIn1));
         animationQueue.add(new Pair<View, Animation>(mcvTax,fadeIn2));
         animationQueue.add(new Pair<View, Animation>(mcvAutoInvest,fadeIn3));
         animationQueue.add(new Pair<View, Animation>(mcvTotal,fadeIn4));
+        animationQueue.add(new Pair<View, Animation>(mcvTotalBudget,fadeIn5));
+        animationQueue.add(new Pair<View, Animation>(mcvSpentBudget,fadeIn6));
+        animationQueue.add(new Pair<View, Animation>(mcvProgressBar,fadeIn7));
 
 
 
@@ -270,8 +331,22 @@ public class BudgetLayout extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 progressContainer.setVisibility(View.VISIBLE);
-                ProgressBarAnimation anim2 = new ProgressBarAnimation(firstBar, true, budgAlreadySpent.intValue(), budgAlreadySpent.add(budgToBeSpent).intValue(), tvBudgetToBeSpent);
+                ProgressBarAnimation anim2 = new ProgressBarAnimation(firstBar, true, budgAlreadySpent.floatValue(), budgAlreadySpent.add(budgToBeSpent).floatValue(), tvBudgetToBeSpent);
                 anim2.setDuration(1000);
+                anim2.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {}
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        tvBudgetToBeSpent.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(budgAlreadySpent.add(budgToBeSpent))));
+                        //tvBudgetToBeSpent.setText("test");
+//                        GifImageView gifImageView = new GifImageView(this.context);
+//                        gifImageView.playgif
+                    }
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {}
+                });
+
                 firstBar.startAnimation(anim2);
             }
             @Override
@@ -300,22 +375,37 @@ public class BudgetLayout extends AppCompatActivity {
         animator.PlayAllUsingDelay(600);
     }
 
+    /*
+    Initializes Controls
+     */
     private void InitializeControls() {
         tvPriceValue = findViewById(R.id.tvPriceValue);
+        tvTaxHeader = findViewById(R.id.tvTaxHeader);
         tvTaxValue = findViewById(R.id.tvTaxValue);
+        tvInvestHeader = findViewById(R.id.tvInvestHeader);
         tvInvestValue = findViewById(R.id.tvInvestValue);
         tvTotalValue = findViewById(R.id.tvTotalValue);
+        tvTotalBudgetValue = findViewById(R.id.tvTotalBudgetValue);
+        tvSpentBudgetValue = findViewById(R.id.tvSpentBudgetValue);
 
         mcvPrice = findViewById(R.id.mcvPrice);
         mcvTax = findViewById(R.id.mcvTax);
         mcvAutoInvest = findViewById(R.id.mcvAutoInvest);
         mcvTotal = findViewById(R.id.mcvTotal);
+        mcvTotalBudget = findViewById(R.id.mcvTotalBudget);
+        mcvSpentBudget = findViewById(R.id.mcvSpentBudget);
+        mcvProgressBar = findViewById(R.id.mcvProgressBar);
+
         progressContainer = findViewById(R.id.progressContainer);
 
         mcvPrice.setVisibility(View.INVISIBLE);
         mcvTax.setVisibility(View.INVISIBLE);
         mcvAutoInvest.setVisibility(View.INVISIBLE);
         mcvTotal.setVisibility(View.INVISIBLE);
+        mcvTotalBudget.setVisibility(View.INVISIBLE);
+        mcvSpentBudget.setVisibility(View.INVISIBLE);
+        mcvProgressBar.setVisibility(View.INVISIBLE);
+
         progressContainer.setVisibility(View.INVISIBLE);
 
         gifImageButton = findViewById(R.id.gifImageView);
@@ -400,9 +490,11 @@ public class BudgetLayout extends AppCompatActivity {
     }
 
     private BigDecimal calculateTotal() {
-        BigDecimal tvPrice;
-        tvPrice = ((tax.multiply(imagePrice)).add(imagePrice));  // Calculate Tax
-        return (((autoInvestAmt.divide(new BigDecimal(100))).multiply(tvPrice)).add(tvPrice)); // Calculate TotalAmount
+        BigDecimal amt;
+        taxAmt = imagePrice.multiply(taxRate);  // Calculate Tax Amount
+        amt = taxAmt.add(imagePrice);
+        investAmt = imagePrice.multiply(autoInvestRate).divide(new BigDecimal(100));  // Calculate Automatic Investment Amount
+        return (((autoInvestRate.divide(new BigDecimal(100))).multiply(amt)).add(amt)); // Calculate TotalAmount
     }
 
     // Disable Back Button

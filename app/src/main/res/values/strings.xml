@@ -1,3 +1,32 @@
 <resources>
-    <string name="app_name">TD_ML_Project</string>
+    <string name="app_name">TD Investor</string>
+
+    <string name="btnOK">OK</string>
+    <string name="btnContinue">Continue</string>
+
+    <string name="txtFinancials">Financials</string>
+    <string name="txtResults">Results</string>
+    <string name="txtPrice">Price: </string>
+    <string name="txtTax">Tax</string>
+    <string name="txtAutoInvestment">Auto Invest</string>
+    <string name="txtTotal">Total: </string>
+    <string name="txtTotalWeeklyBudget">Total Weekly Budget: </string>
+    <string name="txtSpentWeeklyBudget">You Already Spent: </string>
+    <string name="txtPotentialExpenditure">Potential Expenditure: </string>
+
+    <string name="resultFitsBudget">This item fits your budget!</string>
+    <string name="resultFailsBudget">Oh no! You can\'t afford this one...</string>
+
+
+    <string name="addInvHeader">Make an Additional Investment Today?</string>
+    <string name="addInvDouble">YES! - Double My Auto!</string>
+    <string name="addInvMatch">YES! - Match My Purchase!</string>
+    <string name="addInvCustom">YES! - But Let Me Decide</string>
+    <string name="addInvAnotherTime">Maybe Another Time</string>
+
+    <string name="summaryHeader">Summary</string>
+    <string name="summaryInvested">Invested</string>
+    <string name="summaryTotal">Total</string>
+    <string name="summaryBudgetLeft">Budget Left</string>
+
 </resources>

@@ -150,7 +150,6 @@
                         android:textAlignment="center"
                         android:layout_gravity="center"
                         android:textSize="30sp">
-
                     </TextView>
 
 

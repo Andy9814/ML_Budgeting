@@ -41,6 +41,7 @@
         style="@style/CardView.Base"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,13 +54,29 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
+
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent">
+
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        style="@style/Base.Widget.AppCompat.TextView.Light"
+                        android:id="@+id/tvFinancials"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txtFinancials"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:textSize="30sp">
+                    </TextView>
 
 
 
@@ -115,7 +132,7 @@
                                 android:id="@+id/tvTaxHeader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Tax: "
+                                android:text="@string/txtTax"
                                 android:textAlignment="textStart"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -156,7 +173,7 @@
                                 android:layout_height="wrap_content"
                                 android:textAlignment="viewStart"
                                 android:textSize="20sp"
-                                android:text="Auto Investment"
+                                android:text="@string/txtAutoInvestment"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintLeft_toLeftOf="parent"/>
@@ -194,7 +211,7 @@
                                 android:id="@+id/tvTotalHeader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Total"
+                                android:text="@string/txtTotal"
                                 android:textAlignment="textStart"
                                 android:textSize="20sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
@@ -275,101 +292,237 @@
             </com.google.android.material.card.MaterialCardView>
 
 
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CardView.Light"
 
-            <pl.droidsonroids.gif.GifImageView
-                android:id="@+id/gifImageView"
-                android:layout_width="0dp"
-                android:layout_height="198dp"
-                android:layout_marginBottom="164dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/contBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="154dp"
-                android:layout_marginTop="138dp"
-                android:layout_marginEnd="153dp"
-                android:layout_marginBottom="81dp"
-                android:onClick="onClickContinueBtn"
-                android:text="Continue "
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gifImageView" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="296dp"
-                android:layout_marginTop="19dp"
-                android:layout_marginEnd="35dp"
-                android:layout_marginBottom="89dp"
-                android:src="@drawable/ic_launcher_foreground"
-                app:fabSize="normal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gifImageView" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/progressContainer"
-                android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/gifImageView"
+
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                >
-                <TextView
-                    android:id="@+id/tvBudgetToBeSpent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hi"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/firstBar"
-                    />
+                app:layout_constraintRight_toRightOf="parent">
 
-                <ProgressBar
-                    android:id="@+id/firstBar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:backgroundTint="@android:color/transparent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleY="3"
-                    android:progressBackgroundTint="@color/progressRemaining"
-                    android:backgroundTintMode="multiply"
-                    android:progressTint="@color/progressDone"
-                    android:secondaryProgressTint="@color/progressPotential"
-                    android:secondaryProgressTintMode="screen"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/tvCurrentBudget"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
-                <TextView
-                    android:id="@+id/tvCurrentBudget"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toRightOf="@+id/firstBar"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginLeft="10dp"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        style="@style/Base.Widget.AppCompat.TextView.Light"
+                        android:id="@+id/tvResults"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txtResults"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:textSize="30sp">
+                    </TextView>
+
+                    <!--       TOTAL BUDGET -->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/CardView.Light.Content"
+                        android:id="@+id/mcvTotalBudget"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        >
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="10dp">
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvTotalBudgetHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/txtTotalWeeklyBudget"
+                                android:textAlignment="viewStart"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvTotalBudgetValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!--       SPENT BUDGET -->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/CardView.Light.Content"
+                        android:id="@+id/mcvSpentBudget"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        >
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="10dp">
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvSpentBudgetHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/txtSpentWeeklyBudget"
+                                android:textAlignment="viewStart"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvSpentBudgetValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!--       PROGRESS BAR-->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/mcvProgressBar"
+                        style="@style/CardView.Light.Content"
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            >
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                android:text="@string/txtPotentialExpenditure"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:id="@+id/progressContainer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginRight="40dp"
+                                >
+
+
+                                <TextView
+                                    android:id="@+id/tvBudgetToBeSpent"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintBottom_toTopOf="@+id/firstBar"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    />
+
+                                <ProgressBar
+                                    android:id="@+id/firstBar"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:scaleY="3"
+                                    android:progressBackgroundTint="@color/progressRemaining"
+                                    android:backgroundTintMode="multiply"
+                                    android:progressTint="@color/progressDone"
+                                    android:secondaryProgressTint="@color/progressPotential"
+                                    android:secondaryProgressTintMode="screen"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toLeftOf="@+id/tvCurrentBudget"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+
+                                    android:layout_marginLeft="40dp"
+                                    />
+                                <TextView
+                                    android:id="@+id/tvCurrentBudget"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintLeft_toRightOf="@+id/firstBar"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    android:layout_marginLeft="10dp"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <pl.droidsonroids.gif.GifImageView
+                            android:id="@+id/gifImageView"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_gravity="left"
+                            />
+                        <TextView
+                            style="@style/Base.Widget.AppCompat.TextView.Light"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="This Item fits your budget!"/>
+
+                    </LinearLayout>
+
+
+
+<!--                    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="296dp"-->
+<!--                        android:layout_marginTop="19dp"-->
+<!--                        android:layout_marginEnd="35dp"-->
+<!--                        android:layout_marginBottom="89dp"-->
+<!--                        android:src="@drawable/ic_launcher_foreground"-->
+<!--                        app:fabSize="normal"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/gifImageView" />-->
+
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/contBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:onClick="onClickContinueBtn"
+                        android:text="@string/btnContinue"
+                        style="@style/Button.Positive"
+                        android:layout_gravity="center"
+
+                        />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/main_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+<!--        <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--            android:id="@+id/main_content"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
 
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+<!--        </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
     </com.google.android.material.card.MaterialCardView>
 
 
