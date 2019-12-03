@@ -107,7 +107,8 @@ public class AlertDialogActivity extends AppCompatActivity {
     }
 
     public void startCameraDialog(){
-        new MaterialAlertDialogBuilder(AlertDialogActivity.this, R.style.AlertDialogTheme)
+        new MaterialAlertDialogBuilder(AlertDialogActivity.this)
+        //new MaterialAlertDialogBuilder(AlertDialogActivity.this, R.style.AlertDialogTheme)
                 //.setTitle("Title")
                 .setMessage("Go to the Camera to scan the price")
                 .setCancelable(false)

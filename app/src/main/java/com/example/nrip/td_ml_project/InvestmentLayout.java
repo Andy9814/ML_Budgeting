@@ -81,7 +81,8 @@ public class InvestmentLayout extends AppCompatActivity {
                 setTextValues(totalAmt);
                 break;
             case R.id.btnOther:
-                MaterialAlertDialogBuilder ad = new MaterialAlertDialogBuilder(InvestmentLayout.this, R.style.AlertDialogTheme);
+                //MaterialAlertDialogBuilder ad = new MaterialAlertDialogBuilder(InvestmentLayout.this, R.style.AlertDialogTheme);
+                MaterialAlertDialogBuilder ad = new MaterialAlertDialogBuilder(InvestmentLayout.this);
                 ad.setTitle("amount");
                 et = new EditText(this);
                 ad.setView(et);

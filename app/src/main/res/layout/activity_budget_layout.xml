@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -38,82 +38,243 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardInvestment"
+        style="@style/CardView.Base"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="13dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/priceChip"
-                style="@style/Widget.MaterialComponents.Chip.Action"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:ellipsize="marquee"
-                android:singleLine="true"
-                android:text="Price : 50"
-                android:textSize="60sp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CardView.Light"
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/TaxChip"
-                style="@style/Widget.MaterialComponents.Chip.Action"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="48dp"
-                android:text="Tax : $0.4"
-                android:textSize="60sp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/totalChip"
-                style="@style/Widget.MaterialComponents.Chip.Action"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:fontFamily="monospace"
-                android:text="Total Chip : 0.20"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textSize="68sp"
-                android:textStyle="bold|italic"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/autoInvestChip" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/autoInvestChip"
-                style="@style/Widget.MaterialComponents.Chip.Action"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:text="Auto Invest: 0.20"
-                android:textSize="60sp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TaxChip" />
+
+
+                    <!--            PRICE -->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/CardView.Light.Content"
+                        android:id="@+id/mcvPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        >
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="10dp">
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvPriceHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Price: "
+                                android:textAlignment="viewStart"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvPriceValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!--            TAX %-->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/CardView.Light.Content"
+                        android:id="@+id/mcvTax"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        >
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="10dp">
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvTaxHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tax: "
+                                android:textAlignment="textStart"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                />
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvTaxValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="textEnd"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <!--            AUTO INVESTMENT -->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/CardView.Light.Content"
+                        android:id="@+id/mcvAutoInvest"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        >
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="10dp"
+                            >
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvInvestHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="viewStart"
+                                android:textSize="20sp"
+                                android:text="Auto Investment"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"/>
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvInvestValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="textEnd"
+                                android:textSize="20sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!--            TOTAL %-->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/CardView.Light.Content"
+                        android:id="@+id/mcvTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        >
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="10dp">
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvTotalHeader"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total"
+                                android:textAlignment="textStart"
+                                android:textSize="20sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                />
+
+                            <TextView
+                                style="@style/Base.Widget.AppCompat.TextView.Light"
+                                android:id="@+id/tvTotalValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="textEnd"
+                                android:textSize="20sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:id="@+id/priceChip"-->
+<!--                        style="@style/Widget.MaterialComponents.Chip.Action"-->
+<!--                        android:layout_width="120dp"-->
+<!--                        android:layout_height="60dp"-->
+<!--                        android:ellipsize="middle"-->
+<!--                        android:singleLine="true"-->
+<!--                        android:text="Price : 50"-->
+<!--                        android:textSize="60sp"-->
+<!--                        app:cardCornerRadius="8dp"-->
+<!--                        app:cardElevation="10dp"-->
+<!--                    />-->
+
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:id="@+id/TaxChip"-->
+<!--                        style="@style/Widget.MaterialComponents.Chip.Action"-->
+<!--                        android:layout_width="120dp"-->
+<!--                        android:layout_height="60dp"-->
+<!--                           android:text="Tax : $0.4"-->
+<!--                        android:textSize="60sp"-->
+<!--                        app:cardCornerRadius="8dp"-->
+<!--                        app:cardElevation="10dp"-->
+<!--                        />-->
+
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:id="@+id/totalChip"-->
+<!--                        style="@style/Widget.MaterialComponents.Chip.Action"-->
+<!--                        android:layout_width="120dp"-->
+<!--                        android:layout_height="60dp"-->
+<!--                        android:fontFamily="monospace"-->
+<!--                        android:text="Total Chip : 0.20"-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:textAllCaps="true"-->
+<!--                        android:textSize="68sp"-->
+<!--                        android:textStyle="bold|italic"-->
+<!--                        app:cardCornerRadius="8dp"-->
+<!--                        app:cardElevation="10dp"-->
+<!--                        />-->
+
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:id="@+id/autoInvestChip"-->
+<!--                        style="@style/Widget.MaterialComponents.Chip.Action"-->
+<!--                        android:layout_width="120dp"-->
+<!--                        android:layout_height="60dp"-->
+<!--                        android:text="Auto Invest: 0.20"-->
+<!--                        android:textSize="60sp"-->
+<!--                        app:cardCornerRadius="8dp"-->
+<!--                        app:cardElevation="10dp"-->
+<!--                         />-->
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
 
             <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/gifImageView"
@@ -155,6 +316,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/gifImageView" />
 
             <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/progressContainer"
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -212,4 +374,4 @@
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
