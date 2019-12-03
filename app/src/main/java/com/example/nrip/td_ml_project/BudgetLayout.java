@@ -39,7 +39,7 @@ public class BudgetLayout extends AppCompatActivity {
     ArrayList<BudgetEntry> budgetEntries;
     BigDecimal weeklyBudget;
     BudgetCalculator bc;
-    Button contBtn;
+    Button contBtn,plusBtn;
 
     BigDecimal budgTotalWeekly;
     BigDecimal budgAlreadySpent;
@@ -73,6 +73,7 @@ public class BudgetLayout extends AppCompatActivity {
         tvTaxChip = findViewById(R.id.TaxChip);
         tvAutoInvestChip = findViewById(R.id.autoInvestChip);
         tvTotalAmtChip = findViewById(R.id.totalChip);
+        plusBtn = findViewById(R.id.plusBtn);
 
         gifImageButton = findViewById(R.id.gifImageView);
         this.onLoadData();
@@ -253,5 +254,12 @@ public class BudgetLayout extends AppCompatActivity {
         Toast toast = Toast.makeText(this, "This is the Main Screen. If you want to add new Trasaction Please Click on " +
                 "Floating Plus on the right", Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    public void onClickPlusBtn(View view) {
+
+
+
+
     }
 }
