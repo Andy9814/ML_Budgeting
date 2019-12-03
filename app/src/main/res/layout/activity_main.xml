@@ -6,13 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCamera"
+        style="@style/Button.Positive"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="482dp"
+        android:onClick="onClickCameraBtn"
+        android:text="Lets Take a Picture."
+        android:textAlignment="center"
+        android:textSize="20dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnManualPriceAdding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnManualPriceAdding"
+        style="@style/Button.Positive"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:onClick="onClickCameraBtn"
+        android:text="Please Add Price Manually"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCamera">
+
+    </com.google.android.material.button.MaterialButton>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,16 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Launcher">
         <!--        <activity android:name=".previewImage" />-->
-        <activity android:name=".InvestmentLayout">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
+        <activity android:name=".InvestmentLayout"/>
         <activity android:name=".BudgetLayout" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".AlertDialogActivity">
+        <activity android:name=".AlertDialogActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -58,6 +58,7 @@ public class BudgetLayout extends AppCompatActivity {
     BigDecimal taxRate = new BigDecimal(0.13);
     BigDecimal taxAmt;
     BigDecimal totalAmount;
+    BigDecimal manualPrice;
 
     ProgressBar firstBar = null;
     TextView tvBudgetToBeSpent = null;
@@ -69,6 +70,8 @@ public class BudgetLayout extends AppCompatActivity {
     AnimationSet animationSet, animationSetT, animationSetcd;
     GifImageView gifImageButton;
     UserAcount userProfile = null;
+
+    String tvManuallPrice  = "";
 
     TextView tvPriceValue = null;
     TextView tvTaxHeader = null;
@@ -99,38 +102,46 @@ public class BudgetLayout extends AppCompatActivity {
         contBtn = findViewById(R.id.contBtn);
 
         InitializeControls();
-
-        // tvPriceChip = findViewById(R.id.priceChip);
-        // tvTaxChip = findViewById(R.id.TaxChip);
-        // tvAutoInvestChip = findViewById(R.id.autoInvestChip);
-        // tvTotalAmtChip = findViewById(R.id.totalChip);
-
         this.onLoadData();
-        Intent intt = getIntent();
-        Bundle extras = intt.getExtras();
+
+        Intent mainIntent = getIntent();
+        Bundle mainExtras = mainIntent.getExtras();
+        if(mainIntent.hasExtra("ManualPrice")){
+
+            tvManuallPrice = mainExtras.getString("ManualPrice");
+            autoInvestRate = new BigDecimal(mainExtras.getString("autoInvestAmt"));
+            manualPrice   = new BigDecimal(tvManuallPrice);
+            totalAmount   = calculateManualTotal();
+
+            tvPriceValue.setText(tvManuallPrice);
+            tvInvestValue.setText(mainExtras.getString("autoInvestAmt") + "%");
+            tvTaxValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(taxAmt)));
+            tvTaxHeader.setText(getText(R.string.txtTax) + " @" + String.valueOf(taxRate.setScale(2, BigDecimal.ROUND_HALF_UP)) + "%:");
+            tvInvestHeader.setText(getText(R.string.txtAutoInvestment) + " @" + String.valueOf(autoInvestRate.setScale(2, BigDecimal.ROUND_HALF_UP)) + "%:");
+            tvInvestValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(investAmt)));
+
+            comparePricesAndShowGif();
+        }
+        else{
+            Intent intt = getIntent();
+            Bundle extras = intt.getExtras();
+
+            imagePrice = validatePrice(extras.getString("costImage"));
+            autoInvestRate = new BigDecimal(extras.getString("autoInvestAmt"));
+            totalAmount = calculateTotal();
+
+            tvTaxValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(taxAmt)));
+            tvPriceValue.setText(extras.getString("costImage"));
+            tvTaxHeader.setText(getText(R.string.txtTax) + " @" + String.valueOf(taxRate.setScale(2, BigDecimal.ROUND_HALF_UP)) + "%:");
+            tvInvestHeader.setText(getText(R.string.txtAutoInvestment) + " @" + String.valueOf(autoInvestRate.setScale(2, BigDecimal.ROUND_HALF_UP)) + "%:");
+            tvInvestValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(investAmt)));
 
 
-
-
-
-
-
-        imagePrice = validatePrice(extras.getString("costImage"));
-        autoInvestRate = new BigDecimal(extras.getString("autoInvestAmt"));
-        totalAmount = calculateTotal();
-
-        tvPriceValue.setText(extras.getString("costImage"));
-        tvTaxHeader.setText(getText(R.string.txtTax) + " @" + String.valueOf(taxRate.setScale(2, BigDecimal.ROUND_HALF_UP)) + "%:");
-        tvTaxValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(taxAmt)));
-        tvInvestHeader.setText(getText(R.string.txtAutoInvestment) + " @" + String.valueOf(autoInvestRate.setScale(2, BigDecimal.ROUND_HALF_UP)) + "%:");
-        tvInvestValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(investAmt)));
+            if (tvFoundDollarSign) {
+                comparePricesAndShowGif();
+            }
+        }
         tvTotalValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(totalAmount)));
-
-        // tvPriceChip.setText("Price :" + extras.getString("costImage"));
-        // tvAutoInvestChip.setText("Auto Invest:" + extras.getString("autoInvestAmt") +
-        // "%");
-        // tvTaxChip.setText("Tax : " +
-        // String.valueOf(NumberFormat.getCurrencyInstance().format(tax)));
 
         budgTotalWeekly = weeklyBudget;
         budgAlreadySpent = new BigDecimal(350); // TODO NEEDS TO BE PULLED FROM JSON OR WHEREVER
@@ -139,63 +150,12 @@ public class BudgetLayout extends AppCompatActivity {
         tvTotalBudgetValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(weeklyBudget)));
         tvSpentBudgetValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(budgAlreadySpent)));
 
-        //tvPriceChip.setText("Price :" + extras.getString("costImage"));
-        //tvAutoInvestChip.setText("Auto Invest:" + extras.getString("autoInvestAmt") + "%");
-        //tvTaxChip.setText("Tax : " + String.valueOf(NumberFormat.getCurrencyInstance().format(tax)));
-
-
-        //tvTotalAmtChip.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(totalAmount)));
-
-        if (tvFoundDollarSign) {
-            comparePricesAndShowGif();
-        }
-
         // Create UserProfile for this Trasaction
         userProfile = new UserAcount(this.imagePrice, this.autoInvestRate);
         userProfile.setUserTotalAmount(totalAmount);
 
         // if(userProfile.isUserWantToBuyCheck())
-        userProfile.setUserBudget(weeklyBudget.subtract(totalAmount));
-
-        // FOR TEST PURPOSES ----------------- --------------------------------------
-        // DELETE AFTER
-        // tvPriceChip.setText("Price : " + 300);
-        // tvTaxChip.setText("Tax : " + 4.2);
-        // tvAutoInvestChip.setText("autoInvest : "+ 4+"%");
-        // tvTotalAmtChip.setText("Total : "+ 4+"%");
-
-        // // Each Chips Animation Speed.
-        // for (int i = 0; i <= 3; ++i) {
-        // if (i == 0) {
-        // Animation fadeIn = new AlphaAnimation(0, 1);
-        // fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
-        // fadeIn.setDuration(1000);
-        // animationSet = new AnimationSet(true); //change to false
-        // animationSet.addAnimation(fadeIn);
-        // tvPriceChip.setAnimation(animationSet);
-        // } else if (i == 1) {
-        // Animation fadeIn = new AlphaAnimation(0, 1);
-        // fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
-        // fadeIn.setDuration(2000);
-        // animationSetT = new AnimationSet(true); //change to false
-        // animationSetT.addAnimation(fadeIn);
-        // tvTaxChip.setAnimation(animationSetT);
-        // } else if (i == 2) {
-        // Animation fadeIn = new AlphaAnimation(0, 1);
-        // fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
-        // fadeIn.setDuration(3000);
-        // animationSetT = new AnimationSet(true); //change to false
-        // animationSetT.addAnimation(fadeIn);
-        // tvAutoInvestChip.setAnimation(animationSetT);
-        // } else {
-        // Animation fadeIn = new AlphaAnimation(0, 1);
-        // fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
-        // fadeIn.setDuration(4000);
-        // animationSetT = new AnimationSet(true); //change to false
-        // animationSetT.addAnimation(fadeIn);
-        // tvTotalAmtChip.setAnimation(animationSetT);
-        // }
-        // }
+            userProfile.setUserBudget(weeklyBudget.subtract(totalAmount));
 
         Animation fadeIn1 = new FadeInAnimation(0, 1, 700);
         fadeIn1.setAnimationListener(new Animation.AnimationListener() {
@@ -312,9 +272,6 @@ public class BudgetLayout extends AppCompatActivity {
         animationQueue.add(new Pair<View, Animation>(mcvSpentBudget,fadeIn6));
         animationQueue.add(new Pair<View, Animation>(mcvProgressBar,fadeIn7));
 
-
-
-
         tvBudgetToBeSpent = (TextView) findViewById(R.id.tvBudgetToBeSpent);
         tvCurrentBudget = (TextView) findViewById(R.id.tvCurrentBudget);
 
@@ -429,7 +386,13 @@ public class BudgetLayout extends AppCompatActivity {
                 tvFoundDollarSign = true;
             } else {
                 Log.d("", "No dollar found");
-
+                String msg =" `$` is not Found. Please take the picture Again!!";
+                Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent = new Intent(BudgetLayout.this, MainActivity.class);
+                startActivity(intent);
+                this.finish();
+                return BigDecimal.ZERO;
             }
         }
         return new BigDecimal(tvPrice);
@@ -496,16 +459,22 @@ public class BudgetLayout extends AppCompatActivity {
         return (((autoInvestRate.divide(new BigDecimal(100))).multiply(amt)).add(amt)); // Calculate TotalAmount
     }
 
+    private  BigDecimal calculateManualTotal() {
+        BigDecimal amt;
+        taxAmt = manualPrice.multiply(taxRate);  // Calculate Tax Amount
+        amt = taxAmt.add(manualPrice);
+        investAmt = manualPrice.multiply(autoInvestRate).divide(new BigDecimal(100));  // Calculate Automatic Investment Amount
+        return (((autoInvestRate.divide(new BigDecimal(100))).multiply(amt)).add(amt)); // Calculate TotalAmount
+    }
+
     // Disable Back Button
     @Override
     public void onBackPressed() {
-        // when Back Pressed Do Nothing.
-        Toast toast = Toast.makeText(this, "This is the Main Screen. If you want to add new Trasaction Please Click on "
-                + "Floating Plus on the right", Toast.LENGTH_SHORT);
-        toast.show();
+        super.onBackPressed();
+        Intent intent = new Intent(BudgetLayout.this, MainActivity.class);
+        startActivity(intent);
     }
 
-    public void onClickPlusBtn(View view) {
 
-    }
+
 }
