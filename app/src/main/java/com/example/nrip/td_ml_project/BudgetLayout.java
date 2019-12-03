@@ -81,6 +81,7 @@ public class BudgetLayout extends AppCompatActivity {
     TextView tvTotalValue = null;
     TextView tvTotalBudgetValue = null;
     TextView tvSpentBudgetValue = null;
+    TextView tvResultMsg    = null;
 
     MaterialCardView mcvPrice;
     MaterialCardView mcvTax;
@@ -125,7 +126,6 @@ public class BudgetLayout extends AppCompatActivity {
         else{
             Intent intt = getIntent();
             Bundle extras = intt.getExtras();
-
             imagePrice = validatePrice(extras.getString("costImage"));
             autoInvestRate = new BigDecimal(extras.getString("autoInvestAmt"));
             totalAmount = calculateTotal();
@@ -135,8 +135,6 @@ public class BudgetLayout extends AppCompatActivity {
             tvTaxHeader.setText(getText(R.string.txtTax) + " @" + String.valueOf(taxRate.setScale(2, BigDecimal.ROUND_HALF_UP)) + "%:");
             tvInvestHeader.setText(getText(R.string.txtAutoInvestment) + " @" + String.valueOf(autoInvestRate.setScale(2, BigDecimal.ROUND_HALF_UP)) + "%:");
             tvInvestValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(investAmt)));
-
-
             if (tvFoundDollarSign) {
                 comparePricesAndShowGif();
             }
@@ -370,13 +368,24 @@ public class BudgetLayout extends AppCompatActivity {
         progressContainer.setVisibility(View.INVISIBLE);
 
         gifImageButton = findViewById(R.id.gifImageView);
+        tvResultMsg = findViewById(R.id.tvResultMsg);
     }
 
     /*
      * Validate Price it checks for $ sign in the scanned picture.
      */
     private BigDecimal validatePrice(String x) {
-        Log.d("String is  === =========   ", x);
+
+        if(x.equals("")){
+            String msg =" `$` is not Found. Please take the picture Again!!";
+            Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+            toast.show();
+            Intent intent = new Intent(BudgetLayout.this, MainActivity.class);
+            startActivity(intent);
+            this.finish();
+            return BigDecimal.ZERO;
+        }
+
         String tvPrice = "";
         for (int i = 0; i < x.length(); i++) {
             char c = x.charAt(i);
@@ -387,7 +396,7 @@ public class BudgetLayout extends AppCompatActivity {
             } else {
                 Log.d("", "No dollar found");
                 String msg =" `$` is not Found. Please take the picture Again!!";
-                Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
                 toast.show();
                 Intent intent = new Intent(BudgetLayout.this, MainActivity.class);
                 startActivity(intent);
@@ -407,6 +416,7 @@ public class BudgetLayout extends AppCompatActivity {
             Drawable drawable = gifImageButton.getDrawable();
             if (drawable instanceof Animatable) {
                 ((Animatable) drawable).start();
+                tvResultMsg.setText(getText(R.string.resultFitsBudget));
             }
             // userProfile.setUserWantToBuyCheck(true);
         } else {
@@ -414,6 +424,7 @@ public class BudgetLayout extends AppCompatActivity {
             Drawable drawable = gifImageButton.getDrawable();
             if (drawable instanceof Animatable) {
                 ((Animatable) drawable).start();
+                tvResultMsg.setText(getText(R.string.resultFailsBudget));
             }
             // disable the continue button
             contBtn.setEnabled(false);

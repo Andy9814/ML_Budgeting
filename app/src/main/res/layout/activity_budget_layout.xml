@@ -474,12 +474,14 @@
                             android:layout_height="70dp"
                             android:layout_gravity="left"
                             />
+
                         <TextView
+                            android:id="@+id/tvResultMsg"
                             style="@style/Base.Widget.AppCompat.TextView.Light"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="This Item fits your budget!"/>
+                            android:text="This Item fits your budget!" />
 
                     </LinearLayout>
 

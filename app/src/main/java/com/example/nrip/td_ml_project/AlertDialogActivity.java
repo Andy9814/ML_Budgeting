@@ -285,4 +285,12 @@ public class AlertDialogActivity extends AppCompatActivity {
         }
     }
 
+    // Disable Back Button
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(AlertDialogActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
 }
