@@ -31,17 +31,22 @@ public class ProgressBarAnimation extends Animation {
         float multiplicator = ((float)progressBar.getWidth())/((float)progressBar.getMax());
 
         if (animateSecondaryBar){
-            progressBar.setSecondaryProgress((int) value);
-            tv.setX(value * multiplicator - tv.getWidth()/2 + progressBar.getX());
-            tv.setText( String.valueOf(NumberFormat.getCurrencyInstance().format(value)));
+
+            if (value >= (float)progressBar.getMax()) {
+                tv.setText("Budget Exceeded");
+                tv.setX(progressBar.getMax() * multiplicator - tv.getWidth()/2 + progressBar.getX());
+                progressBar.setSecondaryProgress(progressBar.getMax());
+            }
+            else {
+                progressBar.setSecondaryProgress((int) value);
+                tv.setX(value * multiplicator - tv.getWidth() / 2 + progressBar.getX());
+                tv.setText( String.valueOf(NumberFormat.getCurrencyInstance().format(value)));
+            }
+
         }
         else {
             progressBar.setProgress((int) value);
         }
-
-
-        //tv.setText("multi: " + String.valueOf(multiplicator) + "   x: " + String.valueOf(value * multiplicator) + "  width: " + String.valueOf(progressBar.getWidth()));
-        // tv.setText("value: " + String.valueOf(value) + "   x: " + String.valueOf(value * multiplicator) + "  width: " + String.valueOf(progressBar.getWidth()));
     }
 
 }

@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">TD Investor</string>
 
+    <string name="btnTakePic">Snap a Pricetag</string>
+    <string name="btnEnterManually">Enter Price Manually</string>
+
+    <string name="txtOR">OR</string>
+
     <string name="btnOK">OK</string>
     <string name="btnContinue">Continue</string>
 

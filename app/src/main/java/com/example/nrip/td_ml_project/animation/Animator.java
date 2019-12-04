@@ -1,5 +1,6 @@
 package com.example.nrip.td_ml_project.animation;
 
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 
@@ -37,13 +38,19 @@ public class Animator {
         }
     }
 
-    public void PlayAllUsingDelay(int delayStart) {
+    public void PlayAllUsingDelay(final int delayStart) {
 
-        if (!animationQueue.isEmpty()) {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!animationQueue.isEmpty()) {
 
-            //animationQueue.peek().first.startAnimation(animationQueue.peek().second);
-            PlayNext(delayStart);
-        }
+                    //animationQueue.peek().first.startAnimation(animationQueue.peek().second);
+                    PlayNext(delayStart);
+                }
+            }
+        }, 1000);
     }
 
     void PlayNext(final int delayStart) {

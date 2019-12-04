@@ -1,8 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
-    android:oneshot="false">
-<!--    <item android:drawable="@drawable/circle01" android:duration="35"/>-->
-<!--    <item android:drawable="@drawable/circle02" android:duration="35"/>-->
-<!--    <item android:drawable="@drawable/circle03" android:duration="35"/>-->
+    android:oneshot="true">
+    <item android:drawable="@drawable/checkmark01" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark02" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark03" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark04" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark05" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark06" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark07" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark08" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark09" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark10" android:duration="35"/>
 
+    <item android:drawable="@drawable/checkmark11" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark12" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark11" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark12" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark13" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark14" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark15" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark16" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark17" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark18" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark19" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark20" android:duration="35"/>
+
+    <item android:drawable="@drawable/checkmark21" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark22" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark23" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark24" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark25" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark26" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark27" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark28" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark29" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark30" android:duration="35"/>
+
+    <item android:drawable="@drawable/checkmark31" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark32" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark33" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark34" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark35" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark36" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark37" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark38" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark39" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark40" android:duration="35"/>
+
+    <item android:drawable="@drawable/checkmark41" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark42" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark43" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark44" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark45" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark46" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark47" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark48" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark49" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark50" android:duration="35"/>
+
+    <item android:drawable="@drawable/checkmark51" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark52" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark53" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark54" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark55" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark56" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark57" android:duration="35"/>
+    <item android:drawable="@drawable/checkmark58" android:duration="35"/>
 </animation-list>

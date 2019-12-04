@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <item android:drawable="@drawable/xmark01" android:duration="35"/>
+    <item android:drawable="@drawable/xmark02" android:duration="35"/>
+    <item android:drawable="@drawable/xmark03" android:duration="35"/>
+    <item android:drawable="@drawable/xmark04" android:duration="35"/>
+    <item android:drawable="@drawable/xmark05" android:duration="35"/>
+    <item android:drawable="@drawable/xmark06" android:duration="35"/>
+    <item android:drawable="@drawable/xmark07" android:duration="35"/>
+    <item android:drawable="@drawable/xmark08" android:duration="35"/>
+    <item android:drawable="@drawable/xmark09" android:duration="35"/>
+    <item android:drawable="@drawable/xmark10" android:duration="35"/>
+
+    <item android:drawable="@drawable/xmark11" android:duration="35"/>
+    <item android:drawable="@drawable/xmark12" android:duration="35"/>
+    <item android:drawable="@drawable/xmark11" android:duration="35"/>
+    <item android:drawable="@drawable/xmark12" android:duration="35"/>
+    <item android:drawable="@drawable/xmark13" android:duration="35"/>
+    <item android:drawable="@drawable/xmark14" android:duration="35"/>
+    <item android:drawable="@drawable/xmark15" android:duration="35"/>
+    <item android:drawable="@drawable/xmark16" android:duration="35"/>
+    <item android:drawable="@drawable/xmark17" android:duration="35"/>
+    <item android:drawable="@drawable/xmark18" android:duration="35"/>
+    <item android:drawable="@drawable/xmark19" android:duration="35"/>
+    <item android:drawable="@drawable/xmark20" android:duration="35"/>
+
+    <item android:drawable="@drawable/xmark21" android:duration="35"/>
+    <item android:drawable="@drawable/xmark22" android:duration="35"/>
+    <item android:drawable="@drawable/xmark23" android:duration="35"/>
+    <item android:drawable="@drawable/xmark24" android:duration="35"/>
+    <item android:drawable="@drawable/xmark25" android:duration="35"/>
+    <item android:drawable="@drawable/xmark26" android:duration="35"/>
+    <item android:drawable="@drawable/xmark27" android:duration="35"/>
+    <item android:drawable="@drawable/xmark28" android:duration="35"/>
+    <item android:drawable="@drawable/xmark29" android:duration="35"/>
+    <item android:drawable="@drawable/xmark30" android:duration="35"/>
+
+    <item android:drawable="@drawable/xmark31" android:duration="35"/>
+    <item android:drawable="@drawable/xmark32" android:duration="35"/>
+    <item android:drawable="@drawable/xmark33" android:duration="35"/>
+    <item android:drawable="@drawable/xmark34" android:duration="35"/>
+    <item android:drawable="@drawable/xmark35" android:duration="35"/>
+    <item android:drawable="@drawable/xmark36" android:duration="35"/>
+    <item android:drawable="@drawable/xmark37" android:duration="35"/>
+    <item android:drawable="@drawable/xmark38" android:duration="35"/>
+    <item android:drawable="@drawable/xmark39" android:duration="35"/>
+    <item android:drawable="@drawable/xmark40" android:duration="35"/>
+
+    <item android:drawable="@drawable/xmark41" android:duration="35"/>
+    <item android:drawable="@drawable/xmark42" android:duration="35"/>
+    <item android:drawable="@drawable/xmark43" android:duration="35"/>
+    <item android:drawable="@drawable/xmark44" android:duration="35"/>
+    <item android:drawable="@drawable/xmark45" android:duration="35"/>
+    <item android:drawable="@drawable/xmark46" android:duration="35"/>
+    <item android:drawable="@drawable/xmark47" android:duration="35"/>
+    <item android:drawable="@drawable/xmark48" android:duration="35"/>
+    <item android:drawable="@drawable/xmark49" android:duration="35"/>
+    <item android:drawable="@drawable/xmark50" android:duration="35"/>
+
+    <item android:drawable="@drawable/xmark51" android:duration="35"/>
+    <item android:drawable="@drawable/xmark52" android:duration="35"/>
+    <item android:drawable="@drawable/xmark53" android:duration="35"/>
+    <item android:drawable="@drawable/xmark54" android:duration="35"/>
+    <item android:drawable="@drawable/xmark55" android:duration="35"/>
+    <item android:drawable="@drawable/xmark56" android:duration="35"/>
+    <item android:drawable="@drawable/xmark57" android:duration="35"/>
+    <item android:drawable="@drawable/xmark58" android:duration="35"/>
+</animation-list>

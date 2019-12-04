@@ -1,6 +1,7 @@
 package com.example.nrip.td_ml_project;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,6 +95,8 @@ public class BudgetLayout extends AppCompatActivity {
 
     ConstraintLayout progressContainer;
 
+    ImageView imgBudgetResult;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -155,7 +159,7 @@ public class BudgetLayout extends AppCompatActivity {
         // if(userProfile.isUserWantToBuyCheck())
             userProfile.setUserBudget(weeklyBudget.subtract(totalAmount));
 
-        Animation fadeIn1 = new FadeInAnimation(0, 1, 700);
+        Animation fadeIn1 = new FadeInAnimation(0, 1, 200);
         fadeIn1.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -171,7 +175,7 @@ public class BudgetLayout extends AppCompatActivity {
             }
         });
 
-        Animation fadeIn2 = new FadeInAnimation(0, 1, 700);
+        Animation fadeIn2 = new FadeInAnimation(0, 1, 200);
         fadeIn2.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -187,7 +191,7 @@ public class BudgetLayout extends AppCompatActivity {
             }
         });
 
-        Animation fadeIn3 = new FadeInAnimation(0, 1, 700);
+        Animation fadeIn3 = new FadeInAnimation(0, 1, 200);
         fadeIn3.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -203,7 +207,7 @@ public class BudgetLayout extends AppCompatActivity {
             }
         });
 
-        Animation fadeIn4 = new FadeInAnimation(0, 1, 700);
+        Animation fadeIn4 = new FadeInAnimation(0, 1, 200);
         fadeIn4.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -219,7 +223,7 @@ public class BudgetLayout extends AppCompatActivity {
             }
         });
 
-        Animation fadeIn5 = new FadeInAnimation(0, 1, 700);
+        Animation fadeIn5 = new FadeInAnimation(0, 1, 200);
         fadeIn5.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -233,7 +237,7 @@ public class BudgetLayout extends AppCompatActivity {
             }
         });
 
-        Animation fadeIn6 = new FadeInAnimation(0, 1, 700);
+        Animation fadeIn6 = new FadeInAnimation(0, 1, 200);
         fadeIn6.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -247,7 +251,7 @@ public class BudgetLayout extends AppCompatActivity {
             }
         });
 
-        Animation fadeIn7 = new FadeInAnimation(0, 1, 700);
+        Animation fadeIn7 = new FadeInAnimation(0, 1, 200);
         fadeIn7.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -297,10 +301,44 @@ public class BudgetLayout extends AppCompatActivity {
                     public void onAnimationStart(Animation animation) {}
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        tvBudgetToBeSpent.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(budgAlreadySpent.add(budgToBeSpent))));
-                        //tvBudgetToBeSpent.setText("test");
-//                        GifImageView gifImageView = new GifImageView(this.context);
-//                        gifImageView.playgif
+//                        tvBudgetToBeSpent.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(budgAlreadySpent.add(budgToBeSpent))));
+//
+//                        tvBudgetToBeSpent.setX(200);
+
+
+                        Drawable checkAnimation = imgBudgetResult.getBackground();
+                        if (checkAnimation instanceof Animatable) {
+                            imgBudgetResult.setVisibility(View.VISIBLE);
+                            ((Animatable)checkAnimation).start();
+
+                            imgBudgetResult.postDelayed(new Runnable() {
+                                  @Override
+                                  public void run() {
+
+
+                                      Animation resultMsgAnim = new FadeInAnimation(0, 1, 700);
+                                      resultMsgAnim.setAnimationListener(new Animation.AnimationListener() {
+                                          @Override
+                                          public void onAnimationStart(Animation animation) {
+                                          }
+                                          @Override
+                                          public void onAnimationEnd(Animation animation) {
+                                              tvResultMsg.setVisibility(View.VISIBLE);
+                                          }
+                                          @Override
+                                          public void onAnimationRepeat(Animation animation) {
+                                          }
+                                      });
+
+                                      tvResultMsg.startAnimation(resultMsgAnim);
+                                      //resultMsgAnim.start();
+
+
+                                  }
+                            }, 1000);
+                        }
+
+
                     }
                     @Override
                     public void onAnimationRepeat(Animation animation) {}
@@ -331,7 +369,7 @@ public class BudgetLayout extends AppCompatActivity {
         animationQueue.add(new Pair<View, Animation>(progressContainer, anim1));
 
         Animator animator = new Animator(animationQueue);
-        animator.PlayAllUsingDelay(600);
+        animator.PlayAllUsingDelay(500);
     }
 
     /*
@@ -367,8 +405,12 @@ public class BudgetLayout extends AppCompatActivity {
 
         progressContainer.setVisibility(View.INVISIBLE);
 
-        gifImageButton = findViewById(R.id.gifImageView);
+        //gifImageButton = findViewById(R.id.gifImageView);
+        imgBudgetResult = findViewById(R.id.imgBudgetResult);
+        imgBudgetResult.setVisibility(View.INVISIBLE);
+
         tvResultMsg = findViewById(R.id.tvResultMsg);
+        tvResultMsg.setVisibility(View.INVISIBLE);
     }
 
     /*
@@ -412,21 +454,29 @@ public class BudgetLayout extends AppCompatActivity {
      */
     public void comparePricesAndShowGif() {
         if (totalAmount.doubleValue() <= weeklyBudget.doubleValue()) {
-            gifImageButton.setImageResource(R.drawable.checkmarksingleplay);
-            Drawable drawable = gifImageButton.getDrawable();
-            if (drawable instanceof Animatable) {
-                ((Animatable) drawable).start();
-                tvResultMsg.setText(getText(R.string.resultFitsBudget));
-            }
-            // userProfile.setUserWantToBuyCheck(true);
+            imgBudgetResult.setBackgroundResource(R.drawable.checkmark);
+            tvResultMsg.setText(getText(R.string.resultFitsBudget));
+//
+//            gifImageButton.setImageResource(R.drawable.checkmarksingleplay);
+//            Drawable drawable = gifImageButton.getDrawable();
+//            if (drawable instanceof Animatable) {
+//                ((Animatable) drawable).start();
+//                tvResultMsg.setText(getText(R.string.resultFitsBudget));
+//            }
+//            // userProfile.setUserWantToBuyCheck(true);
         } else {
-            gifImageButton.setImageResource(R.drawable.xmarksingleplay);
-            Drawable drawable = gifImageButton.getDrawable();
-            if (drawable instanceof Animatable) {
-                ((Animatable) drawable).start();
-                tvResultMsg.setText(getText(R.string.resultFailsBudget));
-            }
+            imgBudgetResult.setBackgroundResource(R.drawable.xmark);
+            tvResultMsg.setText(getText(R.string.resultFailsBudget));
+
+//            gifImageButton.setImageResource(R.drawable.xmarksingleplay);
+//            Drawable drawable = gifImageButton.getDrawable();
+//            if (drawable instanceof Animatable) {
+//                ((Animatable) drawable).start();
+//                tvResultMsg.setText(getText(R.string.resultFailsBudget));
+//            }
             // disable the continue button
+            contBtn.setAlpha(0f);
+            contBtn.setBackgroundColor(Color.DKGRAY);
             contBtn.setEnabled(false);
             // userProfile.setUserWantToBuyCheck(false);
         }
