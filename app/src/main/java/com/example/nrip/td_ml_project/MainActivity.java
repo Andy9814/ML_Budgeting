@@ -1,5 +1,6 @@
 package com.example.nrip.td_ml_project;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
@@ -7,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.nrip.td_ml_project.animation.Animator;
 import com.example.nrip.td_ml_project.animation.FadeInAnimation;
+import com.example.nrip.td_ml_project.models.UserAcount;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.objects.FirebaseVisionObjectDetector;
@@ -30,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
     Intent goToBudgetLayout;
     String tvAutoInvest = "";
     SharedPreferences prefs;
+
+    EditText Goals;
+    TextView GoalsTv, autoInvesetTv;
+    String tvGoalsAmt= "";
+    UserAcount userAcount ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
         tvCamBtn.setVisibility(View.INVISIBLE);
         tvManuallAddingBtn.setVisibility(View.INVISIBLE);
         tvOR.setVisibility(View.INVISIBLE);
+
+        GoalsTv    = new TextView(this);
+        Goals      = new EditText(this);
+        autoInvesetTv= new TextView(this);
+        autoInvest = new EditText(this);
     }
 
     void AnimateControls() {
@@ -116,19 +130,24 @@ public class MainActivity extends AppCompatActivity {
         // also you can put the custom xml instead of using EditText.
         MaterialAlertDialogBuilder ad =      new MaterialAlertDialogBuilder(MainActivity.this)
                 //.setTitle("AutoInvestment")
-                .setMessage("Please Provide the AutoInvestment : ");
+                .setMessage("Please Provide the AutoInvestment (%) : ");
         autoInvest = new EditText(this);
         ad.setView(autoInvest);
         ad.setCancelable(false);
         ad.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean("firstStart", false);
-                editor.putString("sharedPrefAutoInvest", autoInvest.getText().toString());
-                editor.apply();
+                if(Goals.getText().toString().equals("") && autoInvest.getText().toString().equals("")){
+
+                }else {
+
+                    dialog.dismiss();
+                    SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("firstStart", false);
+                    editor.putString("sharedPrefAutoInvest", autoInvest.getText().toString());
+                    editor.apply();
+                }
             }
         })
                 .create().show();
@@ -150,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnManualPriceAdding:
                 MaterialAlertDialogBuilder ad =      new MaterialAlertDialogBuilder(MainActivity.this)
                         //.setTitle("AutoInvestment")
-                        .setMessage("Please Provide the Amount you want to spend : ");
+                        .setMessage("Provide the Amount you want to spend : ");
                 manualPrice = new EditText(this);
                 ad.setView(manualPrice);
                 ad.setCancelable(false);
@@ -174,7 +193,32 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
+    // create an action bar button
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    // handle button activities
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
+        if (id == R.id.infoBtns) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            builder1.setMessage(R.string.aboutStr);
+            builder1.setCancelable(true);
 
-
+            builder1.setPositiveButton(
+                    "Okay",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:showIn="navigation_view">
-
-        <group android:checkableBehavior="single">
-            <item
-                android:id="@+id/nav_store"
-                android:title="Camera" />
-            <item
-                android:id="@+id/nav_chat"
-                android:title="Galery" />
-            <item
-                android:id="@+id/nav_settings"
-                android:title="Settings" />
-        </group>
-
-        <item android:title="Communicate">
-            <menu>
-                <!--                    Add Mailing link -->
-                <item
-                    android:title="Mail Us" />
-                <!--                    Add Phone link -->
-                <item
-                    android:title="Call Us" />
-            </menu>
-        </item>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/infoBtns"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@drawable/info"
+        />
 </menu>

@@ -1,6 +1,7 @@
 package com.example.nrip.td_ml_project;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -8,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +34,7 @@ public class InvestmentLayout extends AppCompatActivity {
     BigDecimal totalAmt, autoInvest, budgetLeft;
 
 
-    TextView spentEt, investEt, budgetEt;
+    TextView spentEt, investEt, budgetEt,totalValueEt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,7 @@ public class InvestmentLayout extends AppCompatActivity {
         spentEt = findViewById(R.id.spentEt);
         investEt = findViewById(R.id.investedEt);
         budgetEt = findViewById(R.id.remainingBudgetEt);
-
+        totalValueEt = findViewById(R.id.totalValueEt);
 
         Intent intt = getIntent();
         Bundle extras = intt.getExtras();
@@ -111,8 +114,7 @@ public class InvestmentLayout extends AppCompatActivity {
                         .show();
                 break;
             case R.id.btnNotToday:
-                BigDecimal tvPrice2 = (((autoInvest.divide(new BigDecimal(100))).multiply(totalAmt)).add(totalAmt));
-                userProfile.setUserTotalAmount(tvPrice2);
+                userProfile.setUserTotalAmount(totalAmt);
                 userProfile.setUserAutoInvestment(autoInvest);
                 userProfile.setUserBudget(budgetLeft.subtract(userProfile.getUserTotalAmount()));
                 cdView.setVisibility(View.VISIBLE);
@@ -123,9 +125,10 @@ public class InvestmentLayout extends AppCompatActivity {
 
 
     public void setTextValues(BigDecimal investment) {
-        spentEt.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(userProfile.getUserTotalAmount())));
+        totalValueEt.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(userProfile.getUserTotalAmount())));
         investEt.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(investment)));
         budgetEt.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(userProfile.getUserBudget())));
+        spentEt.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(totalAmt)));
     }
 
     // After Click the Transation will be finished.
@@ -138,6 +141,36 @@ public class InvestmentLayout extends AppCompatActivity {
         userSharedPrefEditor.putString("userProfile", userJson);
         userSharedPrefEditor.apply();
 
-        finish();
+        Intent intent = new Intent(InvestmentLayout.this, MainActivity.class);
+        startActivity(intent);
     }
+    // create an action bar button
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    // handle button activities
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.infoBtns) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            builder1.setMessage(R.string.aboutStr);
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Okay",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -33,5 +33,7 @@
     <string name="summaryInvested">Invested</string>
     <string name="summaryTotal">Total</string>
     <string name="summaryBudgetLeft">Budget Left</string>
+    <string name="aboutStr">TD Investor App Using ML Kit\n\nDeveloped By:\n --- Nripdeep Singh \n --- Hur Romanchik\n\n(c)2019</string>
+
 
 </resources>

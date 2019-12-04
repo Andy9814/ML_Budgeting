@@ -1,36 +1,35 @@
 package com.example.nrip.td_ml_project;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Pair;
 
 import com.example.nrip.td_ml_project.animation.Animator;
-import com.example.nrip.td_ml_project.animation.AnimatorListener;
 import com.example.nrip.td_ml_project.animation.FadeInAnimation;
 import com.example.nrip.td_ml_project.animation.ProgressBarAnimation;
 import com.example.nrip.td_ml_project.models.BudgetCalculator;
 import com.example.nrip.td_ml_project.models.BudgetEntry;
 import com.example.nrip.td_ml_project.models.UserAcount;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.chip.Chip;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -118,7 +117,7 @@ public class BudgetLayout extends AppCompatActivity {
             manualPrice   = new BigDecimal(tvManuallPrice);
             totalAmount   = calculateManualTotal();
 
-            tvPriceValue.setText(tvManuallPrice);
+            tvPriceValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(manualPrice)));
             tvInvestValue.setText(mainExtras.getString("autoInvestAmt") + "%");
             tvTaxValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(taxAmt)));
             tvTaxHeader.setText(getText(R.string.txtTax) + " @" + String.valueOf(taxRate.setScale(2, BigDecimal.ROUND_HALF_UP)) + "%:");
@@ -381,7 +380,7 @@ public class BudgetLayout extends AppCompatActivity {
         tvTaxValue = findViewById(R.id.tvTaxValue);
         tvInvestHeader = findViewById(R.id.tvInvestHeader);
         tvInvestValue = findViewById(R.id.tvInvestValue);
-        tvTotalValue = findViewById(R.id.tvTotalValue);
+        tvTotalValue = findViewById(R.id.totalValueEt);
         tvTotalBudgetValue = findViewById(R.id.tvTotalBudgetValue);
         tvSpentBudgetValue = findViewById(R.id.tvSpentBudgetValue);
 
@@ -535,7 +534,37 @@ public class BudgetLayout extends AppCompatActivity {
         Intent intent = new Intent(BudgetLayout.this, MainActivity.class);
         startActivity(intent);
     }
+    // create an action bar button
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    // handle button activities
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
+        if (id == R.id.infoBtns) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            builder1.setMessage(R.string.aboutStr);
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Okay",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
 }
