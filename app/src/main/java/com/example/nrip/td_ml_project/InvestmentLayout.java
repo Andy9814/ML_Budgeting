@@ -34,7 +34,7 @@ public class InvestmentLayout extends AppCompatActivity {
     BigDecimal totalAmt, autoInvest, budgetLeft;
 
 
-    TextView spentEt, investEt, budgetEt,totalValueEt;
+    TextView spentEt, investEt, budgetEt,totalValueEt, tvSummary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class InvestmentLayout extends AppCompatActivity {
         investEt = findViewById(R.id.investedEt);
         budgetEt = findViewById(R.id.remainingBudgetEt);
         totalValueEt = findViewById(R.id.totalValueEt);
+        tvSummary = findViewById(R.id.tvSummary);
 
         Intent intt = getIntent();
         Bundle extras = intt.getExtras();
@@ -73,6 +74,7 @@ public class InvestmentLayout extends AppCompatActivity {
                 userProfile.setUserBudget(budgetLeft.subtract(userProfile.getUserTotalAmount()));
                 cdView.setVisibility(View.VISIBLE);
                 setTextValues(userProfile.getUserAutoInvestment());
+                tvSummary.setText(getText(R.string.summaryHeader) + " - " + getText(R.string.addTypeDouble));
                 break;
             case R.id.btnMatch:
                 BigDecimal tvPrice1 = totalAmt;
@@ -82,6 +84,7 @@ public class InvestmentLayout extends AppCompatActivity {
                 userProfile.setUserBudget(budgetLeft.subtract(userProfile.getUserTotalAmount()));
                 cdView.setVisibility(View.VISIBLE);
                 setTextValues(totalAmt);
+                tvSummary.setText(getText(R.string.summaryHeader) + " - " + getText(R.string.addTypeMatch));
                 break;
             case R.id.btnOther:
                 //MaterialAlertDialogBuilder ad = new MaterialAlertDialogBuilder(InvestmentLayout.this, R.style.AlertDialogTheme);
@@ -89,6 +92,8 @@ public class InvestmentLayout extends AppCompatActivity {
                 ad.setTitle("amount");
                 et = new EditText(this);
                 ad.setView(et);
+
+
                 // ad.setCancelable(false);  // you can click on differnt area of screen to cancell the dialog box
                 ad.setPositiveButton("okay", new DialogInterface.OnClickListener() {
                     @Override
@@ -112,6 +117,7 @@ public class InvestmentLayout extends AppCompatActivity {
 //                            }
 //                        })
                         .show();
+                tvSummary.setText(getText(R.string.summaryHeader) + " - " + getText(R.string.addTypeCustom));
                 break;
             case R.id.btnNotToday:
                 userProfile.setUserTotalAmount(totalAmt);
@@ -119,6 +125,7 @@ public class InvestmentLayout extends AppCompatActivity {
                 userProfile.setUserBudget(budgetLeft.subtract(userProfile.getUserTotalAmount()));
                 cdView.setVisibility(View.VISIBLE);
                 setTextValues(userProfile.getUserAutoInvestment());
+                tvSummary.setText(getText(R.string.summaryHeader) + " - " + getText(R.string.addTypeAnotherTime));
         }
 
     }

@@ -29,6 +29,11 @@
     <string name="addInvCustom">YES! - But Let Me Decide</string>
     <string name="addInvAnotherTime">Maybe Another Time</string>
 
+    <string name="addTypeDouble">2x Auto</string>
+    <string name="addTypeMatch">Matched</string>
+    <string name="addTypeCustom">Custom</string>
+    <string name="addTypeAnotherTime">Default</string>
+
     <string name="summaryHeader">Summary</string>
     <string name="summaryInvested">Invested</string>
     <string name="summaryTotal">Total</string>
