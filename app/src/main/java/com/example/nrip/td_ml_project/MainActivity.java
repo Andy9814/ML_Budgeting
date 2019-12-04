@@ -14,15 +14,14 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.nrip.td_ml_project.animation.Animator;
 import com.example.nrip.td_ml_project.animation.FadeInAnimation;
+import com.example.nrip.td_ml_project.models.Transaction;
 import com.example.nrip.td_ml_project.models.UserAcount;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.firebase.ml.vision.FirebaseVision;
-import com.google.firebase.ml.vision.objects.FirebaseVisionObjectDetector;
-import com.google.firebase.ml.vision.objects.FirebaseVisionObjectDetectorOptions;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -39,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     TextView GoalsTv, autoInvesetTv;
     String tvGoalsAmt= "";
     UserAcount userAcount ;
+    Transaction transactions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,12 +127,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showStartDialog() {
-        // also you can put the custom xml instead of using EditText.
-        MaterialAlertDialogBuilder ad =      new MaterialAlertDialogBuilder(MainActivity.this)
-                //.setTitle("AutoInvestment")
-                .setMessage("Please Provide the AutoInvestment (%) : ");
-        autoInvest = new EditText(this);
-        ad.setView(autoInvest);
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        MaterialAlertDialogBuilder ad =      new MaterialAlertDialogBuilder(MainActivity.this);
+        GoalsTv.setText("Whats you Goal for Savings?");
+        layout.addView(GoalsTv);
+        layout.addView(Goals);
+
+        autoInvesetTv.setText("What do you want to set for your AutoInvestment?");
+        layout.addView(autoInvesetTv);
+        layout.addView(autoInvest);
+        ad.setView(layout);
+
         ad.setCancelable(false);
         ad.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
@@ -146,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putBoolean("firstStart", false);
                     editor.putString("sharedPrefAutoInvest", autoInvest.getText().toString());
+                    editor.putString("goalsAmt", Goals.getText().toString());
                     editor.apply();
                 }
             }
@@ -161,7 +168,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnCamera:
                 Intent it = new Intent(this,AlertDialogActivity.class);
                 tvAutoInvest = prefs.getString("sharedPrefAutoInvest", "");
+                tvGoalsAmt= prefs.getString("goalsAmt", "");
                 it.putExtra("AutoInvest",tvAutoInvest);
+                it.putExtra("GoalsAmt",tvGoalsAmt);
                 startActivity(it);
                 break;
 
@@ -178,14 +187,13 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         tvAutoInvest = prefs.getString("sharedPrefAutoInvest", "");
+                        tvGoalsAmt= prefs.getString( "goalsAmt", "");
                         goToBudgetLayout.putExtra("ManualPrice",manualPrice.getText().toString());
                         goToBudgetLayout.putExtra("autoInvestAmt",tvAutoInvest);
+                        goToBudgetLayout.putExtra("GoalsAmt",tvGoalsAmt);
                         startActivity(goToBudgetLayout);
                     }
                 }).create().show();
-
-
-
         }
     }
 

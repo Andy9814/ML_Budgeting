@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nrip.td_ml_project.models.Transaction;
 import com.example.nrip.td_ml_project.models.UserAcount;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
@@ -30,7 +32,7 @@ public class InvestmentLayout extends AppCompatActivity {
     CardView cdView;
     Button btnMatch, btnDoubleInvt, btnOther;
     EditText et;
-    UserAcount userProfile = null;
+    Transaction userTransaction = null;
     BigDecimal totalAmt, autoInvest, budgetLeft;
 
 
@@ -55,11 +57,12 @@ public class InvestmentLayout extends AppCompatActivity {
 
         Intent intt = getIntent();
         Bundle extras = intt.getExtras();
-        userProfile = (UserAcount) extras.getSerializable("userProfile");
+        userTransaction = new Transaction();
+        userTransaction = (Transaction) extras.getSerializable("userTransaction");
 
-        totalAmt = userProfile.getUserTotalAmount();
-        autoInvest = userProfile.getUserAutoInvestment();
-        budgetLeft = userProfile.getUserBudget();
+        totalAmt = userTransaction.getUserTotalAmount();
+        autoInvest = userTransaction.getUserAutoInvestment();
+        budgetLeft = userTransaction.getUserBudget();
     }
 
     public void onClickInvstBtn(View view) {
@@ -68,18 +71,18 @@ public class InvestmentLayout extends AppCompatActivity {
                 final BigDecimal tvPrice = (((autoInvest.multiply(new BigDecimal(2))
                         .divide(new BigDecimal(100)))
                         .multiply(totalAmt)).add(totalAmt));
-                userProfile.setUserTotalAmount(tvPrice);
-                userProfile.setUserAutoInvestment(autoInvest.multiply(new BigDecimal(2)));
-                userProfile.setUserBudget(budgetLeft.subtract(userProfile.getUserTotalAmount()));
+                userTransaction.setUserTotalAmount(tvPrice);
+                userTransaction.setUserAutoInvestment(autoInvest.multiply(new BigDecimal(2)));
+                userTransaction.setUserBudget(budgetLeft.subtract(userTransaction.getUserTotalAmount()));
                 cdView.setVisibility(View.VISIBLE);
-                setTextValues(userProfile.getUserAutoInvestment());
+                setTextValues(userTransaction.getUserAutoInvestment());
                 break;
             case R.id.btnMatch:
                 BigDecimal tvPrice1 = totalAmt;
                 tvPrice1 = tvPrice1.add(totalAmt);
-                userProfile.setUserTotalAmount(tvPrice1);
-                userProfile.setUserAutoInvestment(autoInvest);
-                userProfile.setUserBudget(budgetLeft.subtract(userProfile.getUserTotalAmount()));
+                userTransaction.setUserTotalAmount(tvPrice1);
+                userTransaction.setUserAutoInvestment(autoInvest);
+                userTransaction.setUserBudget(budgetLeft.subtract(userTransaction.getUserTotalAmount()));
                 cdView.setVisibility(View.VISIBLE);
                 setTextValues(totalAmt);
                 break;
@@ -96,50 +99,58 @@ public class InvestmentLayout extends AppCompatActivity {
                         BigDecimal otherInvest = new BigDecimal(et.getText().toString());
                         BigDecimal tvPrice1 = totalAmt;
                         tvPrice1 = tvPrice1.add(otherInvest);
-                        userProfile.setUserTotalAmount(tvPrice1);
-                        userProfile.setUserAutoInvestment(otherInvest);
-                        userProfile.setUserBudget(budgetLeft.subtract(userProfile.getUserTotalAmount()));
-                        setTextValues(userProfile.getUserAutoInvestment());
+                        userTransaction.setUserTotalAmount(tvPrice1);
+                        userTransaction.setUserAutoInvestment(otherInvest);
+                        userTransaction.setUserBudget(budgetLeft.subtract(userTransaction.getUserTotalAmount()));
+                        setTextValues(userTransaction.getUserAutoInvestment());
                         Toast.makeText(getApplicationContext(), et.getText(), Toast.LENGTH_LONG).show();
                         cdView.setVisibility(View.VISIBLE);
                     }
-                })
-
-                        // need to decide if we need this
-//                        .setNeutralButton("LATER", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//                            }
-//                        })
-                        .show();
+                }).show();
                 break;
             case R.id.btnNotToday:
-                userProfile.setUserTotalAmount(totalAmt);
-                userProfile.setUserAutoInvestment(autoInvest);
-                userProfile.setUserBudget(budgetLeft.subtract(userProfile.getUserTotalAmount()));
+                userTransaction.setUserTotalAmount(totalAmt);
+                userTransaction.setUserAutoInvestment(autoInvest);
+                userTransaction.setUserBudget(budgetLeft.subtract(userTransaction.getUserTotalAmount()));
                 cdView.setVisibility(View.VISIBLE);
-                setTextValues(userProfile.getUserAutoInvestment());
+                setTextValues(userTransaction.getUserAutoInvestment());
         }
 
     }
 
 
     public void setTextValues(BigDecimal investment) {
-        totalValueEt.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(userProfile.getUserTotalAmount())));
+        totalValueEt.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(userTransaction.getUserTotalAmount())));
         investEt.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(investment)));
-        budgetEt.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(userProfile.getUserBudget())));
+        budgetEt.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(userTransaction.getUserBudget())));
         spentEt.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(totalAmt)));
     }
 
-    // After Click the Transation will be finished.
+    // After Click the Transaction will be finished.
     public void onClickOkay(View view) {
+
+        userTransaction.testx.add(totalAmt);
         // save the user in the sharedPreferences.
-        SharedPreferences userSharedPreference = getSharedPreferences("userSharedPreference", MODE_PRIVATE);
-        SharedPreferences.Editor userSharedPrefEditor = userSharedPreference.edit();
+        String jsonArray;
         Gson gson = new Gson();
-        String userJson = gson.toJson(userProfile);
-        userSharedPrefEditor.putString("userProfile", userJson);
-        userSharedPrefEditor.apply();
+        jsonArray = gson.toJson(userTransaction);
+
+        SharedPreferences settings = getSharedPreferences("userSharedPrefEditor",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("userProfile",jsonArray);
+        // commit the shared pref
+        editor.apply();
+        editor.commit();
+
+
+
+//        SharedPreferences userSharedPreference = getSharedPreferences("userSharedPreference", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor userSharedPrefEditor = userSharedPreference.edit();
+//        Gson gson = new Gson();
+//        String userJson = gson.toJson(userTransaction);
+//        userSharedPrefEditor.putString("userProfile", userJson);
+//        userSharedPrefEditor.commit();
 
         Intent intent = new Intent(InvestmentLayout.this, MainActivity.class);
         startActivity(intent);

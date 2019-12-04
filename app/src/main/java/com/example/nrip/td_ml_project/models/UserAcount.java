@@ -1,70 +1,59 @@
 package com.example.nrip.td_ml_project.models;
 
-import com.google.firebase.firestore.auth.User;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class UserAcount implements Serializable {
-    private String     userName;
-    private BigDecimal userImagePrice;
-    private BigDecimal userAutoInvestment;
-    private BigDecimal userTotalAmount;
-    private boolean    userWantToBuyCheck;  // change name
-    private BigDecimal userBudget;
-    // constructor
-    public  UserAcount(BigDecimal imagePrice,BigDecimal autoInvest){
-        this.userImagePrice = imagePrice;
-        this.userAutoInvestment= autoInvest;
+    private String Name;
+    private BigDecimal savingGoalAmt;
+    private BigDecimal autoInvestment;
+    private  Boolean FirstTimeUser;
+    private List<Transaction> mapTransactions;
+
+    public List<Transaction> getMapTransactions() {
+        return mapTransactions;
     }
 
-    public BigDecimal getUserBudget() {
-        return userBudget;
-    }
-
-    public void setUserBudget(BigDecimal userBudget) {
-        this.userBudget = userBudget;
+    public void setMapTransactions(List<Transaction> mapTransactions) {
+        this.mapTransactions = mapTransactions;
     }
 
 
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        Name = name;
     }
 
-    public void setUserImagePrice(BigDecimal userImagePrice) {
-        this.userImagePrice = userImagePrice;
+    public void setSavingGoalAmt(BigDecimal savingGoalAmt) {
+        this.savingGoalAmt = savingGoalAmt;
     }
 
-    public void setUserAutoInvestment(BigDecimal userAutoInvestment) {
-        this.userAutoInvestment = userAutoInvestment;
+    public void setAutoInvestment(BigDecimal autoInvestment) {
+        this.autoInvestment = autoInvestment;
     }
 
-    public void setUserTotalAmount(BigDecimal userTotalAmount) {
-        this.userTotalAmount = userTotalAmount;
+    public void setFirstTimeUser(Boolean firstTimeUser) {
+        FirstTimeUser = firstTimeUser;
     }
 
-    public void setUserWantToBuyCheck(boolean userWantToBuyCheck) {
-        this.userWantToBuyCheck = userWantToBuyCheck;
+
+
+    public String getName() {
+        return Name;
     }
 
-    public String getUserName() {
-        return userName;
+    public BigDecimal getSavingGoalAmt() {
+        return savingGoalAmt;
     }
 
-    public BigDecimal getUserImagePrice() {
-        return userImagePrice;
+    public BigDecimal getAutoInvestment() {
+        return autoInvestment;
     }
 
-    public BigDecimal getUserAutoInvestment() {
-        return userAutoInvestment;
+    public Boolean getFirstTimeUser() {
+        return FirstTimeUser;
     }
 
-    public BigDecimal getUserTotalAmount() {
-        return userTotalAmount;
-    }
 
-    public boolean isUserWantToBuyCheck() {
-        return userWantToBuyCheck;
-    }
 }

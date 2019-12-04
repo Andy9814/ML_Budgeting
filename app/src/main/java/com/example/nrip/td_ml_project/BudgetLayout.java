@@ -1,7 +1,9 @@
 package com.example.nrip.td_ml_project;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
@@ -28,8 +30,10 @@ import com.example.nrip.td_ml_project.animation.FadeInAnimation;
 import com.example.nrip.td_ml_project.animation.ProgressBarAnimation;
 import com.example.nrip.td_ml_project.models.BudgetCalculator;
 import com.example.nrip.td_ml_project.models.BudgetEntry;
+import com.example.nrip.td_ml_project.models.Transaction;
 import com.example.nrip.td_ml_project.models.UserAcount;
 import com.google.android.material.card.MaterialCardView;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,17 +64,14 @@ public class BudgetLayout extends AppCompatActivity {
     BigDecimal taxAmt;
     BigDecimal totalAmount;
     BigDecimal manualPrice;
+    BigDecimal goalsAmt;
 
     ProgressBar firstBar = null;
     TextView tvBudgetToBeSpent = null;
     TextView tvCurrentBudget = null;
     Boolean tvFoundDollarSign = false;
 
-    // Chip tvPriceChip, tvTaxChip, tvAutoInvestChip, tvTotalAmtChip;
-    Animation animation;
-    AnimationSet animationSet, animationSetT, animationSetcd;
-    GifImageView gifImageButton;
-    UserAcount userProfile = null;
+    Transaction userTransaction = null;
 
     String tvManuallPrice  = "";
 
@@ -114,8 +115,10 @@ public class BudgetLayout extends AppCompatActivity {
 
             tvManuallPrice = mainExtras.getString("ManualPrice");
             autoInvestRate = new BigDecimal(mainExtras.getString("autoInvestAmt"));
+            goalsAmt      =  new BigDecimal(mainExtras.getString("GoalsAmt"));
             manualPrice   = new BigDecimal(tvManuallPrice);
             totalAmount   = calculateManualTotal();
+
 
             tvPriceValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(manualPrice)));
             tvInvestValue.setText(mainExtras.getString("autoInvestAmt") + "%");
@@ -145,18 +148,49 @@ public class BudgetLayout extends AppCompatActivity {
         tvTotalValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(totalAmount)));
 
         budgTotalWeekly = weeklyBudget;
-        budgAlreadySpent = new BigDecimal(350); // TODO NEEDS TO BE PULLED FROM JSON OR WHEREVER
+        budgAlreadySpent = new BigDecimal(0); // TODO NEEDS TO BE PULLED FROM JSON OR WHEREVER
         budgToBeSpent = totalAmount;
+
+//        SharedPreferences sharedPreferences = getSharedPreferences("userSharedPrefEditor",MODE_PRIVATE);
+//        //Gson gson = new Gson();
+//        String json = sharedPreferences.getString("userProfile", "");
+//        Transaction obj = gson.fromJson(json, Transaction.class);
+
+
+        SharedPreferences settings = getSharedPreferences("userSharedPrefEditor",
+                Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+
+        String jsonStr = settings.getString("userProfile","");
+        Transaction obj = gson.fromJson(jsonStr, Transaction.class);
+
+
+        if(obj != null){
+            for(int i =0 ; i <= obj.testx.size(); ++i){
+                BigDecimal test = obj.testx.get(i);
+                budgAlreadySpent = budgAlreadySpent.add(test);
+            }
+        }
+
 
         tvTotalBudgetValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(weeklyBudget)));
         tvSpentBudgetValue.setText(String.valueOf(NumberFormat.getCurrencyInstance().format(budgAlreadySpent)));
 
         // Create UserProfile for this Trasaction
-        userProfile = new UserAcount(this.imagePrice, this.autoInvestRate);
-        userProfile.setUserTotalAmount(totalAmount);
+        userTransaction = new Transaction();
+        userTransaction.setUserImagePrice(this.imagePrice);
+        userTransaction.setUserAutoInvestment(this.autoInvestRate);
+        userTransaction.setUserGoalsAmt(this.goalsAmt);
+        userTransaction.setUserTotalAmount(totalAmount);
+        userTransaction.setUserBudget(this.weeklyBudget);
+
+
+
+
+
 
         // if(userProfile.isUserWantToBuyCheck())
-            userProfile.setUserBudget(weeklyBudget.subtract(totalAmount));
+        userTransaction.setUserBudget(weeklyBudget.subtract(totalAmount));
 
         Animation fadeIn1 = new FadeInAnimation(0, 1, 200);
         fadeIn1.setAnimationListener(new Animation.AnimationListener() {
@@ -350,22 +384,7 @@ public class BudgetLayout extends AppCompatActivity {
             public void onAnimationRepeat(Animation animation) {
             }
         });
-
-        // // firstBar.startAnimation(anim1);
-        // firstBar.postDelayed(new Runnable() {
-        // @Override
-        // public void run() {
-        // //tv.setX((int)(firstBar.getProgress()/firstBar.getWidth()));
-        // //tv.setX(40);
-        // ProgressBarAnimation anim2 = new ProgressBarAnimation(firstBar, true,
-        // budgAlreadySpent.intValue(), budgAlreadySpent.add(budgToBeSpent).intValue(),
-        // tvBudgetToBeSpent);
-        // anim2.setDuration(4000);
-        // firstBar.startAnimation(anim2);
-        // }
-        // }, 400);
-
-        animationQueue.add(new Pair<View, Animation>(progressContainer, anim1));
+       animationQueue.add(new Pair<View, Animation>(progressContainer, anim1));
 
         Animator animator = new Animator(animationQueue);
         animator.PlayAllUsingDelay(500);
@@ -448,36 +467,19 @@ public class BudgetLayout extends AppCompatActivity {
         return new BigDecimal(tvPrice);
     }
 
-    /*
+    /*budgAlreadySpent.doubleValue() > totalAmount.doubleValue() &&
      * Check if the Price is lower than Budget.
      */
     public void comparePricesAndShowGif() {
         if (totalAmount.doubleValue() <= weeklyBudget.doubleValue()) {
             imgBudgetResult.setBackgroundResource(R.drawable.checkmark);
             tvResultMsg.setText(getText(R.string.resultFitsBudget));
-//
-//            gifImageButton.setImageResource(R.drawable.checkmarksingleplay);
-//            Drawable drawable = gifImageButton.getDrawable();
-//            if (drawable instanceof Animatable) {
-//                ((Animatable) drawable).start();
-//                tvResultMsg.setText(getText(R.string.resultFitsBudget));
-//            }
-//            // userProfile.setUserWantToBuyCheck(true);
         } else {
             imgBudgetResult.setBackgroundResource(R.drawable.xmark);
             tvResultMsg.setText(getText(R.string.resultFailsBudget));
-
-//            gifImageButton.setImageResource(R.drawable.xmarksingleplay);
-//            Drawable drawable = gifImageButton.getDrawable();
-//            if (drawable instanceof Animatable) {
-//                ((Animatable) drawable).start();
-//                tvResultMsg.setText(getText(R.string.resultFailsBudget));
-//            }
-            // disable the continue button
             contBtn.setAlpha(0f);
             contBtn.setBackgroundColor(Color.DKGRAY);
             contBtn.setEnabled(false);
-            // userProfile.setUserWantToBuyCheck(false);
         }
 
     }
@@ -506,7 +508,7 @@ public class BudgetLayout extends AppCompatActivity {
     public void onClickContinueBtn(View view) {
         Intent intent = new Intent(BudgetLayout.this, InvestmentLayout.class);
         Bundle b = new Bundle();
-        b.putSerializable("userProfile", userProfile); // send userProfile to new Activity
+        b.putSerializable("userTransaction", userTransaction); // send userProfile to new Activity
         intent.putExtras(b);
         startActivity(intent);
     }
