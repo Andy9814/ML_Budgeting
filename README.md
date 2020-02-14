@@ -1,6 +1,6 @@
 # ML_Budgeting App
 
-The App is simple – The user links up a bank account (we used a .csv pulled from my RBC bank accounts), 
+It a Machine Learning App, using ML Kit. The user links up a bank account (we used a .csv pulled from my RBC bank accounts), 
 
 sets a goal amount they wish to save for. They also set an auto investment value, something typically small like 1-5%. 
 This will be invested into their savings account whenever they make a purchase.
